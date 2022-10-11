@@ -1,0 +1,50 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    height: 150px;
+    background-color: rgb(40, 40, 43);
+    text-align: right;
+}
+
+.img-banner {
+    width: 150px;
+    height: 150px;
+}
+
+.img-banner > img {
+    padding-left: 10px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.button-banner {
+    margin-top:  auto;
+    margin-bottom:  auto;
+    height: 50px;
+    width: 250px;
+}
+
+.button-banner > button {
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: background-color 500ms, transform 1s;
+}
+
+.button-banner > button:hover {
+    background-color:rgba(255, 0, 0, 0.625);
+}
+
+/* Primaire : #FD2D01
+● Secondaire : #FFD7D7
+● Tertiaire : #4E5166 */
+
