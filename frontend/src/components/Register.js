@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/Register.css";
-
+import axios from "axios";
 import React, { useState } from "react";
 function Register() {
   //   const [name, setName] = useState("");
@@ -9,7 +9,17 @@ function Register() {
 
   function signUp(event) {
     event.preventDefault();
-    console.log(password, email);
+    axios
+      .post("http://localhost:3300/api/auth/signup", {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -44,4 +54,18 @@ function Register() {
     </div>
   );
 }
+
+// axios.get('http://localhost:3000/api/auth/signup')
+//   .then(function (response) {
+//     // en cas de réussite de la requête
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     // en cas d’échec de la requête
+//     console.log(error);
+//   })
+//   .then(function () {
+//     // dans tous les cas
+//   });
+
 export default Register;
