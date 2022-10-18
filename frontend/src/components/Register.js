@@ -2,31 +2,42 @@ import { Link } from "react-router-dom";
 import "../styles/Register.css";
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../app/features/user";
+// import { signup } from "../../../backend/controllers/User";
+
 function Register() {
+  const dispatch = useDispatch();
   //   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("ceci est mon at@gmail.com");
 
   function signUp(event) {
-    event.preventDefault();
-    axios
-      .post("http://localhost:3300/api/auth/signup", {
-        email: email,
-        password: password,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    event.nativeEvent.stopPropagation();
+    event.stopPropagation();
+    // axios
+    //   .post("http://127.0.0.1/api/auth/signup", {
+    //     email: email,
+    //     password: password,
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    dispatch(registerUser({ name: "test", email: email }));
   }
 
   return (
     <div id="container">
       <h1>Register</h1>
 
-      <form onSubmit={signUp}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <input
           id="email"
           type="email"
@@ -42,7 +53,13 @@ function Register() {
           placeholder="Password"
         />
 
-        <button type="submit" id="register-button">
+        <button
+          type="submit"
+          id="register-button"
+          onClick={(event) => {
+            signUp(event);
+          }}
+        >
           sign in
         </button>
       </form>
