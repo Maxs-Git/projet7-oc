@@ -1,0 +1,78 @@
+.postcontainer {
+    margin: 20px;
+    background-color: white;
+}
+
+#name-area {
+    padding-left: 10px;
+    display: flex;
+    height: 40px;
+}
+#name-area > p {
+    margin: 10px;
+}
+
+.title {
+    height:20px;
+    width: 100%;
+    text-align: center;
+}
+
+#text-area {
+    margin-top: 20px;
+    margin-left: 10px;
+    height: 150px;
+    width: 90%;
+}
+
+#likeDislike-area {
+    margin-left: 10px;
+}
+
+#like {
+    background: none;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: rgb(15, 164, 17);
+}
+
+#dislike {
+    background: none;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: rgb(191, 37, 37);
+}
+
+#button-area {
+    margin-right: 10px;
+    justify-content:  space-between;
+    display: flex;
+}
+#technic-button > button{
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    border: none;
+    transition: all 1s ease;
+    transform: scale(1);
+}
+
+#technic-button > button:hover{  
+      transform: scale(1.2) perspective(1px)
+}
+
+#modif {
+    background-color: orange;
+}
+
+#delete {
+    background-color: rgb(154, 37, 37);
+}

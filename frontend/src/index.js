@@ -5,28 +5,26 @@ import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import App from "./components/App";
-import React, { lazy } from "react";
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./app/features/user";
+import React, { lazy, Suspense } from "react";
+import store from "./app/store";
+// import Register from "./components/Register";
+// import Login from "./components/Login";
+import Post from "./components/Post";
 
 const Register = lazy(() => import("./components/Register"));
 const Login = lazy(() => import("./components/Login"));
-
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
-      </Routes>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Suspense>
     </Provider>
   </BrowserRouter>
 );

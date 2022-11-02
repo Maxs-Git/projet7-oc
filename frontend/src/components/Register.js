@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import "../styles/Register.css";
-import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../app/features/user";
+import axios from "axios";
 // import { signup } from "../../../backend/controllers/User";
 
 function Register() {
   const dispatch = useDispatch();
   //   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("ceci est mon at@gmail.com");
+  const [email, setEmail] = useState("");
 
   function signUp(event) {
     event.nativeEvent.stopPropagation();
@@ -26,7 +26,7 @@ function Register() {
     //   .catch(function (error) {
     //     console.log(error);
     //   });
-    dispatch(registerUser({ name: "test", email: email }));
+    // dispatch(registerUser({ name: "test", email: email }));
   }
 
   return (

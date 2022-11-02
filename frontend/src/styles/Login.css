@@ -46,9 +46,10 @@ input:focus {
     transition: background-color 500ms, transform 1s;
 }
 
-#register-button:hover {
-
-    background-color: rgba(54, 191, 4, 0.712);
+#login-button:hover {
+    border: 2px solid #c05945;
+    color: #c05945;
+    background-color: rgb(217, 217, 217);
 }
 
 #container > p {

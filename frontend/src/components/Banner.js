@@ -10,6 +10,8 @@ function Banner() {
       <div className="button-banner">
         <button>Login</button>
         <button>Register</button>
+        {/* <button>Se deconnecter</button>
+        <button>Ajouter un post</button> */}
       </div>
     </header>
   );
