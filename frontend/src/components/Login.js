@@ -3,6 +3,7 @@ import "../styles/Login.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../app/features/user";
+import { postData } from "../app/features/user";
 
 function Login() {
   const dispatch = useDispatch();
@@ -13,7 +14,12 @@ function Login() {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
+    // whatever you want to send
+    const data = { email: email, password: password };
+    dispatch(postData(data));
+
     dispatch(loginUser({ password: password, email: email }));
+    console.log();
   }
   return (
     <div id="container">
