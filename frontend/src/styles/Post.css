@@ -61,18 +61,29 @@
     border-radius: 20px;
     padding: 10px 20px;
     border: none;
-    transition: all 1s ease;
-    transform: scale(1);
 }
 
-#technic-button > button:hover{  
-      transform: scale(1.2) perspective(1px)
-}
+
 
 #modif {
+    color: white;
+    border: 2px solid  orange;
     background-color: orange;
 }
 
+#modif:hover {
+    border: 2px solid  orange;
+    color: orange;
+    background-color: white;
+}
+
 #delete {
+    color: white;
     background-color: rgb(154, 37, 37);
+}
+
+#delete:hover {
+    border: 2px solid  rgb(154, 37, 37);
+    color: rgb(154, 37, 37);
+    background-color: white;
 }

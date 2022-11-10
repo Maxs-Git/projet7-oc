@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import Banner from "./Banner";
 import "../styles/Login.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../app/features/user";
-import { postData } from "../app/features/user";
+import { postLogin } from "../app/features/user";
 
 function Login() {
   const dispatch = useDispatch();
@@ -16,10 +17,9 @@ function Login() {
     event.preventDefault();
     // whatever you want to send
     const data = { email: email, password: password };
-    dispatch(postData(data));
+    dispatch(postLogin(data));
 
     dispatch(loginUser({ password: password, email: email }));
-    console.log();
   }
   return (
     <div id="container">
@@ -54,7 +54,7 @@ function Login() {
 
       <p>
         Pas inscrit
-        <Link to="/Register"> enregistrez-vous</Link>
+        <Link to="/Post"> enregistrez-vous</Link>
       </p>
     </div>
   );

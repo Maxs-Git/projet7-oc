@@ -1,5 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from "./features/user.js";
+import postData from "./features/user.js";
 import postReducer from "./features/post.js";
 
 export default configureStore({
@@ -7,5 +8,7 @@ export default configureStore({
     user: userReducer,
     post: postReducer,
   },
-  // middleware: [fetchLogin],
+  // middleware: [
+  //   ...getDefaultMiddleware(),
+  //   postData],
 });
