@@ -5,8 +5,8 @@ const auth = require("../middleware/auth");
 
 const postCtrl = require("../controllers/post");
 
-router.get("/", postCtrl.getAllPost);
-router.post("/", postCtrl.createPost);
+router.get("/", auth, postCtrl.getAllPost);
+router.post("/", auth, postCtrl.createPost);
 router.post("/:id/like", auth, postCtrl.likeDislike);
 // router.get("/:id", auth, postCtrl.getOnepost);
 router.put("/:id", auth, postCtrl.modifyPost);

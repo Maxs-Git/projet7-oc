@@ -54,7 +54,7 @@ function Login() {
 
       <p>
         Pas inscrit
-        <Link to="/Post"> enregistrez-vous</Link>
+        <Link to="/Register"> enregistrez-vous</Link>
       </p>
     </div>
   );

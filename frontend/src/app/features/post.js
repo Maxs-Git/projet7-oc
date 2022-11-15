@@ -24,12 +24,8 @@ const postSlice = createSlice({
     postComment: (state, action) => {
       state.push(action.payload);
     },
-
-    like: (state) => {
-      state.value += 1;
-    },
-    dislike: (state) => {
-      state.value += 1;
+    postAdded: (state, action) => {
+      state.push(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -55,4 +51,4 @@ export const middlewarePost = createAsyncThunk(
 );
 
 export default postSlice.reducer;
-export const { postComment, like, dislike } = postSlice.actions;
+export const { postComment, postAdded } = postSlice.actions;

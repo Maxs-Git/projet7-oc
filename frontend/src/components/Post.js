@@ -1,10 +1,6 @@
 import "../styles/Post.css";
-import {
-  postComment,
-  like,
-  dislike,
-  middlewarePost,
-} from "../app/features/post";
+import Banner from "./Banner";
+import { postComment, postAdded, middlewarePost } from "../app/features/post";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import React, { useState } from "react";
@@ -12,25 +8,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 function Post() {
-  const post = useSelector(postComment);
+  const post = useSelector(postAdded);
   const postObject = post.payload;
-  const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  // const dispatch = useDispatch();
+  // const [title, setTitle] = useState("");
+  // const [text, setText] = useState("");
 
-  function userPost(event) {
-    event.nativeEvent.stopPropagation();
-    event.stopPropagation();
-    event.preventDefault();
+  // function userPost(event) {
+  //   event.nativeEvent.stopPropagation();
+  //   event.stopPropagation();
+  //   event.preventDefault();
 
-    const data = { title: title, textContent: text };
-    dispatch(middlewarePost(data));
+  //   const data = { title: title, textContent: text };
+  //   dispatch(middlewarePost(data));
 
-    dispatch(postComment({ title: title, textContent: text }));
-  }
+  //   dispatch(postAdded({ title: title, textContent: text }));
+  // }
   return (
     <div>
-      <form>
+      <Banner />
+      {/* <form>
         <label for="title">Titre:</label>
         <input
           type="text"
@@ -58,7 +55,7 @@ function Post() {
         >
           post
         </button>
-      </form>
+      </form> */}
       {postObject.post.map((post, index) => (
         <div className="postcontainer">
           <div id="name-area">
@@ -69,10 +66,10 @@ function Post() {
           <div id="text-area">{post.textContent}</div>
           <div id="button-area">
             <div id="likeDislike-area">
-              <button id="like" onClick={() => dispatch(like())}>
+              <button id="like">
                 <FontAwesomeIcon icon={faThumbsUp} /> <span>{post.like}</span>
               </button>
-              <button id="dislike" onClick={() => dispatch(dislike())}>
+              <button id="dislike">
                 <FontAwesomeIcon icon={faThumbsDown} />{" "}
                 <span>{post.dislike}</span>
               </button>

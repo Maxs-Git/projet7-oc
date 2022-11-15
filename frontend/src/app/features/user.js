@@ -39,5 +39,21 @@ export const postLogin = createAsyncThunk("type/postLogin", async (data) => {
   }
 });
 
+export const postRegister = createAsyncThunk(
+  "type/postSignup",
+  async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3300/api/auth/signup",
+        data
+      );
+      // const userToken = response.data.token;
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
 export const { registerUser, logout, loginUser } = userSlice.actions;
 export default userSlice.reducer;

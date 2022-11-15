@@ -5,7 +5,7 @@ import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import App from "./components/App";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import store from "./app/store";
 // import Register from "./components/Register";
 // import Login from "./components/Login";
@@ -22,8 +22,9 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Post />} />
           <Route path="/Post" element={<Post />} />
+          {/* <Route path="/Post" element={<Post />} /> */}
         </Routes>
       </Suspense>
     </Provider>

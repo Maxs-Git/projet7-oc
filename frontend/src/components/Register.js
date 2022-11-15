@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/Register.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../app/features/user";
+import { postRegister, registerUser } from "../app/features/user";
 import axios from "axios";
 // import { signup } from "../../../backend/controllers/User";
 
@@ -11,22 +11,30 @@ function Register() {
   //   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   function signUp(event) {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
-    // axios
-    //   .post("http://127.0.0.1/api/auth/signup", {
-    //     email: email,
-    //     password: password,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    // dispatch(registerUser({ name: "test", email: email }));
+    event.preventDefault();
+    // whatever you want to send
+    const data = {
+      name: name,
+      lastName: lastName,
+      email: email,
+      password: password,
+    };
+    dispatch(postRegister(data));
+
+    dispatch(
+      registerUser({
+        name: name,
+        lastName: lastName,
+        password: password,
+        email: email,
+      })
+    );
   }
 
   return (
@@ -38,6 +46,20 @@ function Register() {
           e.preventDefault();
         }}
       >
+        <input
+          id="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="prénom"
+        />
+        <input
+          id="lastName"
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder="Nom"
+        />
         <input
           id="email"
           type="email"
