@@ -22,9 +22,8 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Post />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/Post" element={<Post />} />
-          {/* <Route path="/Post" element={<Post />} /> */}
         </Routes>
       </Suspense>
     </Provider>

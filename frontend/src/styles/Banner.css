@@ -26,7 +26,6 @@ header{
     margin-top:  auto;
     margin-bottom:  auto;
     height: 50px;
-    width: 250px;
 }
 
 .button-banner > button {
@@ -43,6 +42,8 @@ header{
 .button-banner > button:hover {
     background-color:rgba(255, 0, 0, 0.625);
 }
+
+
 
 /* Primaire : #FD2D01
 ● Secondaire : #FFD7D7

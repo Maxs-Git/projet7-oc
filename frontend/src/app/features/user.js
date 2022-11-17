@@ -22,6 +22,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
       state.token = action.payload;
+      localStorage.setItem("token", action.payload);
     });
   },
 });
@@ -33,6 +34,7 @@ export const postLogin = createAsyncThunk("type/postLogin", async (data) => {
       data
     );
     // const userToken = response.data.token;
+    window.location.href = "http://localhost:3000/Post"
     return response.data.token;
   } catch (err) {
     console.error(err);
@@ -48,6 +50,7 @@ export const postRegister = createAsyncThunk(
         data
       );
       // const userToken = response.data.token;
+      window.location.href = "http://localhost:3000/Post"
       return response.data;
     } catch (err) {
       console.error(err);

@@ -19,7 +19,8 @@ exports.createPost = (req, res, next) => {
   post
     .save()
     .then(() => {
-      res.status(201).json({ message: "Objet enregistré !" });
+      console.log(save());
+      res.status(201).json({ message: "Objet créer !" });
     })
     .catch((error) => {
       res.status(400).json({ error });

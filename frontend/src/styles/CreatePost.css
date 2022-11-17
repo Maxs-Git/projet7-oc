@@ -1,0 +1,75 @@
+#postCreator {
+    left: 0;
+    right: 0;
+    padding: 10px;
+    width: 400px;
+    height: 320px;
+    margin-top: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 30px;
+    border: 2px solid #FD2D01;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    z-index: 3;
+}
+
+#postCreation {
+    display: flex;
+    flex-direction: column;
+}
+
+#closeForm {
+    margin-left: 90%;
+    position: absolute;
+    cursor: pointer;
+    color: red;
+    border: none;
+    background:none;
+    height: 20px;
+    width: 15px;
+}
+
+#title-input {
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 2px solid #FD2D01;
+    height: 20px;
+    width: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#textZone {
+    outline: none;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 2px solid #FD2D01;
+    margin-left: auto;
+    margin-right: auto;
+    resize: none;
+    width: 300px;
+    height: 150px;
+}
+
+
+#postSubmit {
+    border-radius: 30px;
+    height: 30px;
+    background-color: #FD2D01;
+    border: none;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+#postSubmit:hover {
+    cursor: pointer;
+    color: #FD2D01;
+    border: 2px solid #FD2D01;
+    background-color: white;
+}

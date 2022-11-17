@@ -3,8 +3,10 @@ import "../styles/Banner.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import CreatePost from "./CreatePost";
+import Login from "./Login";
+import Register from "./Register";
 function Banner() {
-  const [createPost, setCreatePost] = useState(true);
+  const [createPost, setCreatePost] = useState(false);
   return (
     <header>
       <div className="img-banner">
@@ -12,8 +14,12 @@ function Banner() {
       </div>
 
       <div className="button-banner">
-        <button>Login</button>
-        <button>Register</button>
+        <button>
+          <Link to="/Login"> Login</Link>
+        </button>
+        <button>
+          <Link to="/Register"> Register</Link>
+        </button>
         <button>
           <Link onClick={() => setCreatePost(true)}>ajouter un post</Link>
         </button>
