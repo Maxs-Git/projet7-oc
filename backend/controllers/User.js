@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ObjectID = require("mongoose").Types.ObjectId;
 
 const User = require("../models/User");
 
@@ -27,7 +28,6 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  console.log(req.body);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (user === null) {
@@ -62,3 +62,15 @@ exports.login = (req, res, next) => {
       res.status(500).json({ error });
     });
 };
+
+exports.myUser = (req, res, next) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown :" + req.params.id);
+
+  User.findById(req.params.id, (err, data) => {
+    if (!err) res.send(data);
+    else console.log("id unknown :" + err);
+  }).select("-passsword");
+};
+
+// module.exports.logout = (req, res) => {};

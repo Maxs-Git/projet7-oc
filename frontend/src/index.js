@@ -1,30 +1,24 @@
-import { render } from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import App from "./components/App";
-import React, { lazy, Suspense, useState } from "react";
+import App from "./App";
+import React, {  Suspense } from "react";
 import store from "./app/store";
+
 // import Register from "./components/Register";
 // import Login from "./components/Login";
-import Post from "./components/Post";
 
-const Register = lazy(() => import("./components/Register"));
-const Login = lazy(() => import("./components/Login"));
+const myToken = store.getState().user;
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
       <Suspense fallback={<h1>Loading...</h1>}>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/Post" element={<Post />} />
-        </Routes>
+        <App />
       </Suspense>
     </Provider>
   </BrowserRouter>

@@ -1,12 +1,10 @@
-import Banner from "./Banner";
 import Register from "./Register";
-function App() {
+function Home() {
   return (
     <div>
-      <Banner />
       <Register />
     </div>
   );
 }
 
-export default App;
+export default Home;

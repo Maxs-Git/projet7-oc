@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+body {
+    background-color:  #4E5166;
+  font-family: 'Lato', sans-serif;
+}
+
 .postcontainer {
-    margin: 20px;
+    margin: 50px auto;
+    width: 700px;
+    border-radius: 20px;
     background-color: white;
 }
 
@@ -18,11 +26,16 @@
     text-align: center;
 }
 
-#text-area {
+#text-zone {
+    border-radius: 20px;
+    padding: 10px;
+    overflow-wrap: break-word;
+    border: 1px solid red;
     margin-top: 20px;
-    margin-left: 10px;
-    height: 150px;
-    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+    width: 650px;
 }
 
 #likeDislike-area {

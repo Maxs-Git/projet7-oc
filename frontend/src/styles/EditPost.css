@@ -1,0 +1,58 @@
+#postEdit {
+    display: flex;
+    flex-direction: column;
+    border-top: 2px solid red;
+    width: 100%;
+}
+
+#closeFormEdit {
+    cursor: pointer;
+    color: #FD2D01;
+    border: none;
+    background: none;
+    margin-top: 10px;
+    margin-left: 670px;
+    position: absolute;
+}
+
+#title-edit-input {
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 30%;
+    border: none;
+    border-radius: 10px;
+    border: 1px solid red;
+    padding: 5px;
+    outline:none;
+}
+#textZone-edit {
+    border: none;
+    border: 1px solid red;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px auto;
+    height: 70px;
+    width: 90%;
+    resize: none;
+    outline:none;
+}
+
+#fileEdit {
+    border: none;
+    background: none;
+    margin: 10px 30px;
+}
+
+#postSubmitEdit {
+    cursor: pointer;
+    border-radius: 30px;
+    height: 30px;
+    background-color: #FD2D01;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}

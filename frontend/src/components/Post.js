@@ -1,52 +1,107 @@
 import "../styles/Post.css";
-import Banner from "./Banner";
-import { getPost, getPostMiddleware, postAdded } from "../app/features/post";
+import {
+  deletePostMiddleware,
+  getPostMiddleware,
+  likeDislikePostMiddleware,
+} from "../app/features/post";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import React, { useEffect, useState, getState } from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import { getUser } from "../app/features/user";
+import { useState } from "react";
+import EditPost from "./EditPost";
+
 function Post() {
-  // const post = useSelector(getPostMiddleware);
   // console.log(postObject);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getPostMiddleware());
-  });
-
-  dispatch(getPost());
-
   const post = useSelector((state) => state.post);
-  console.log(post);
+  const postStatus = useSelector((state) => state.post.status);
+  const userData = useSelector((state) => state.user);
+
+  function dislike() {
+    dispatch(
+      likeDislikePostMiddleware({
+        UsersDislike: localStorage.getItem("userId"),
+        dislike: +1,
+      })
+    );
+  }
+
+  //affiche les posts
+  useEffect(() => {
+    dispatch(getUser());
+    if (postStatus === "idle") {
+      dispatch(getPostMiddleware());
+    }
+  }, [postStatus, dispatch]);
+
+  const [postId, setPostId] = useState("");
+
+  const [editPost, setEditPost] = useState(false);
+  function toLocalStorage() {
+    localStorage.setItem("postId", postId);
+  }
+  toLocalStorage();
+
+  function deletePost() {
+    dispatch(deletePostMiddleware());
+  }
 
   return (
     <div>
-      <Banner />
-      {post.map((post, index) => (
-        <div className="postcontainer">
+      {post.posts.map((post, index) => (
+        <div className="postcontainer" id={post.userId} key={post._id}>
           <div id="name-area">
-            <p>nomtest</p>
-            <p>prenomtest</p>
+            <p>{post.name}</p>
+            <p>{post.lastName}</p>
           </div>
-          <h2 class="title">{post.title}</h2>
-          <div id="text-area">{post.textContent}</div>
+          <h2 className="title">{post.title}</h2>
+          <div id="text-zone">
+            {post.textContent}
+            {post.imageUrl}
+          </div>
           <div id="button-area">
             <div id="likeDislike-area">
-              <button id="like">
+              <button
+                id="like"
+                onClick={(e) => {
+                  dislike(e)(setPostId(e.target.value));
+                }}
+              >
                 <FontAwesomeIcon icon={faThumbsUp} /> <span>{post.like}</span>
               </button>
               <button id="dislike">
-                <FontAwesomeIcon icon={faThumbsDown} />{" "}
+                <FontAwesomeIcon icon={faThumbsDown} />
                 <span>{post.dislike}</span>
               </button>
             </div>
-            <div id="technic-button">
-              <button id="modif">modifier</button>
-              <button id="delete">supprimer</button>
-            </div>
+            {userData.user._id === post.userId && (
+              <div id="technic-button">
+                <button
+                  value={post._id}
+                  id="modif"
+                  onClick={(e) => {
+                    setPostId(e.target.value)(setEditPost(true));
+                  }}
+                >
+                  modifier
+                </button>
+                <button
+                  value={post._id}
+                  onClick={(e) => {
+                    setPostId(e.target.value) (deletePost());
+                  }}
+                  id="delete"
+                >
+                  supprimer
+                </button>
+              </div>
+            )}
           </div>
+          {editPost ? <EditPost /> : null}
         </div>
       ))}
     </div>

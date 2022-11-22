@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import Banner from "./Banner";
 import "../styles/Login.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../app/features/user";
 import { postLogin } from "../app/features/user";
-
 function Login() {
   const dispatch = useDispatch();
   const [password, setPassword] = useState("");

@@ -1,52 +1,34 @@
-import "../styles/CreatePost.css";
-import { postAdded, middlewarePost } from "../app/features/post";
+import "../styles/EditPost.css";
+import { editPostMiddleware } from "../app/features/post";
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-function CreatePost() {
+function EditPost() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [image, setImage] = useState("");
-  const [createPost, setCreatePost] = useState(true);
-  const userData = useSelector((state) => state.user);
-  console.log(userData.user.lastName);
+  const [editPost, setEditPost] = useState(true);
+  const [postId, setPostId] = useState("");
   function userPost(event) {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
 
-    const data = {
-      name: userData.user.name,
-      lastName: userData.user.lastName,
-      title: title,
-      textContent: text,
-      imageUrl: image,
-    };
-    dispatch(middlewarePost(data));
-
-    dispatch(
-      postAdded({
-        name: userData.user.name,
-        lastName: userData.user.lastName,
-        title: title,
-        textContent: text,
-        imageUrl: image,
-      })
-    );
+    const data = { title: title, textContent: text, imageUrl: image };
+    dispatch(editPostMiddleware(data));
   }
   return (
-    <div id="postCreator">
-      <form id="postCreation">
-        <button id="closeForm" onClick={() => setCreatePost(false)}>
+    <div>
+      <form id="postEdit" enctype="multipart/form-data">
+        <button id="closeFormEdit" onClick={() => setEditPost(false)}>
           <FontAwesomeIcon icon={faXmark} />
         </button>
         <input
           type="text"
           name="title"
-          id="title-input"
+          id="title-edit-input"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="title"
@@ -55,7 +37,7 @@ function CreatePost() {
           maxLength="300"
           type="textarea"
           name="textZone"
-          id="textZone"
+          id="textZone-edit"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="text"
@@ -63,17 +45,17 @@ function CreatePost() {
 
         <input
           type="file"
-          id="file"
+          id="fileEdit"
           accept="image/png, image/jpeg"
           value={image}
           onChange={(e) => setImage(e.target.value)}
         ></input>
 
         <button
-          id="postSubmit"
+          id="postSubmitEdit"
           type="submit"
-          onClick={(event) => {
-            userPost(event);
+          onClick={(e) => {
+            userPost(e)(setEditPost(false));
           }}
         >
           post
@@ -83,4 +65,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default EditPost;

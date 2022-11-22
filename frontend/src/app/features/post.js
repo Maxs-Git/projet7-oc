@@ -1,39 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const initialState = [
-  {
-    title: "test",
-    id: 1,
-    textContent: "lorem10",
-    like: 0,
-    dislike: 1,
-  },
-  {
-    title: "test22",
-    id: 2,
-    textContent: "lorem112",
-    like: 3,
-    dislike: 0,
-  },
-];
+
+const initialState = { posts: [], status: "idle" };
 
 const postSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
     getPost: (state, action) => {
-      state.push(action.payload);
+      state.posts.push(action.payload);
     },
     postAdded: (state, action) => {
-      state.push(action.payload);
+      state.posts.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(middlewarePost.fulfilled, (state, action) => {
-      // state = action.payload;
+      state = action.payload;
     });
     builder.addCase(getPostMiddleware.fulfilled, (state, action) => {
-      state = action.payload;
+      state.posts = action.payload;
     });
   },
 });
@@ -51,7 +37,6 @@ export const middlewarePost = createAsyncThunk(
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (err) {
       console.error(err);
@@ -66,6 +51,66 @@ export const getPostMiddleware = createAsyncThunk(
       const response = await axios.get(
         "http://localhost:3300/api/post/",
 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const editPostMiddleware = createAsyncThunk(
+  "type/middlewareEditPost",
+  async (data) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3300/api/post/${localStorage.getItem("postId")}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const deletePostMiddleware = createAsyncThunk(
+  "type/middlewareDeletePost",
+  async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3300/api/post/${localStorage.getItem("postId")}`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const likeDislikePostMiddleware = createAsyncThunk(
+  "type/middlewareLikeDislikePost",
+  async (data) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3300/api/post/${localStorage.getItem("userId")}/like`,
+        data,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

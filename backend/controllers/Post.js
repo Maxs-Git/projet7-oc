@@ -2,24 +2,20 @@ const Post = require("../models/Post");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
-  // console.log(req.auth);
-  // const postObject = JSON.parse(req.body);
   const postObject = req.body;
-  console.log(postObject);
   delete postObject._id;
   delete postObject._userId;
   const post = new Post({
     ...postObject,
     userId: req.auth.userId,
-    // imageUrl: `${req.protocol}://${req.get("host")}/images/${
-    //   req.file.filename
-    // }`,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.body.imageUrl
+    }`,
   });
 
   post
     .save()
     .then(() => {
-      console.log(save());
       res.status(201).json({ message: "Objet créer !" });
     })
     .catch((error) => {
