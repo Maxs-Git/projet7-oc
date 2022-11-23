@@ -5,12 +5,12 @@ export const userSlice = createSlice({
   name: "user",
   initialState: { user: null, token: null },
   reducers: {
-    // registerUser: (state, action) => {
-    //   state.user = action.payload;
-    // },
+    registerUser: (state, action) => {
+      state.user = action.payload;
+    },
 
     loginUser: (state, action) => {
-      state.token = action.payload;
+      state.user = action.payload;
     },
 
     thisUser: (state, action) => {
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
-      state.token = action.payload.token;
+      state.user = action.payload;
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("userId", action.payload.userId);
     });
@@ -36,7 +36,6 @@ export const postLogin = createAsyncThunk("type/postLogin", async (data) => {
       data
     );
     // const userToken = response.data.token;
-    window.location.href = "http://localhost:3000/Post";
     return response.data;
   } catch (err) {
     console.error(err);
@@ -52,7 +51,6 @@ export const postRegister = createAsyncThunk(
         data
       );
       // const userToken = response.data.token;
-      window.location.href = "http://localhost:3000/Post";
       return response.data;
     } catch (err) {
       console.error(err);

@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "../styles/Login.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../app/features/user";
 import { postLogin } from "../app/features/user";
+
 function Login() {
   const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -18,6 +21,7 @@ function Login() {
     dispatch(postLogin(data));
 
     dispatch(loginUser({ password: password, email: email }));
+    navigate("/post");
   }
   return (
     <div id="container">

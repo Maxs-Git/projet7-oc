@@ -3,6 +3,7 @@ import {
   deletePostMiddleware,
   getPostMiddleware,
   likeDislikePostMiddleware,
+  editMyPost,
 } from "../app/features/post";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -21,6 +22,15 @@ function Post() {
   const postStatus = useSelector((state) => state.post.status);
   const userData = useSelector((state) => state.user);
 
+  //affiche les posts
+  useEffect(() => {
+    if (postStatus === "idle") {
+      dispatch(getPostMiddleware());
+    }
+  }, [postStatus, dispatch]);
+
+  const [postId, setPostId] = useState("");
+
   function dislike() {
     dispatch(
       likeDislikePostMiddleware({
@@ -30,24 +40,20 @@ function Post() {
     );
   }
 
-  //affiche les posts
-  useEffect(() => {
-    dispatch(getUser());
-    if (postStatus === "idle") {
-      dispatch(getPostMiddleware());
-    }
-  }, [postStatus, dispatch]);
+  function showEditPost(e) {
+    e.nativeEvent.stopPropagation();
+    e.stopPropagation();
+    e.preventDefault();
 
-  const [postId, setPostId] = useState("");
+    setPostId(e.target.dataset["id"]);
 
-  const [editPost, setEditPost] = useState(false);
-  function toLocalStorage() {
-    localStorage.setItem("postId", postId);
+    const editObject = { postId: e.target.dataset["id"], postShow: true };
+
+    dispatch(editMyPost(editObject));
   }
-  toLocalStorage();
 
-  function deletePost() {
-    dispatch(deletePostMiddleware());
+  function deletePost(e) {
+    dispatch(deletePostMiddleware(e.target.dataset["id"]));
   }
 
   return (
@@ -61,38 +67,34 @@ function Post() {
           <h2 className="title">{post.title}</h2>
           <div id="text-zone">
             {post.textContent}
-            {post.imageUrl}
+            <img src={post.imageUrl}></img>
           </div>
           <div id="button-area">
             <div id="likeDislike-area">
-              <button
-                id="like"
-                onClick={(e) => {
-                  dislike(e)(setPostId(e.target.value));
-                }}
-              >
-                <FontAwesomeIcon icon={faThumbsUp} /> <span>{post.like}</span>
+              <button id="like">
+                <FontAwesomeIcon icon={faThumbsUp} />
+                <span>{post.like}</span>
               </button>
               <button id="dislike">
                 <FontAwesomeIcon icon={faThumbsDown} />
                 <span>{post.dislike}</span>
               </button>
             </div>
-            {userData.user._id === post.userId && (
+            {userData.user.userId === post.userId && (
               <div id="technic-button">
                 <button
-                  value={post._id}
+                  data-id={post._id}
                   id="modif"
                   onClick={(e) => {
-                    setPostId(e.target.value)(setEditPost(true));
+                    showEditPost(e);
                   }}
                 >
                   modifier
                 </button>
                 <button
-                  value={post._id}
+                  data-id={post._id}
                   onClick={(e) => {
-                    setPostId(e.target.value) (deletePost());
+                    deletePost(e);
                   }}
                   id="delete"
                 >
@@ -101,7 +103,7 @@ function Post() {
               </div>
             )}
           </div>
-          {editPost ? <EditPost /> : null}
+          {postId === post._id ? <EditPost /> : null}
         </div>
       ))}
     </div>

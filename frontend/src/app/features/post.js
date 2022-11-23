@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = { posts: [], status: "idle" };
+const initialState = { posts: [], status: "idle", postEdit: null };
 
 const postSlice = createSlice({
   name: "posts",
@@ -12,6 +12,9 @@ const postSlice = createSlice({
     },
     postAdded: (state, action) => {
       state.posts.push(action.payload);
+    },
+    editMyPost: (state, action) => {
+      state.postEdit = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -69,7 +72,7 @@ export const editPostMiddleware = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.put(
-        `http://localhost:3300/api/post/${localStorage.getItem("postId")}`,
+        `http://localhost:3300/api/post/${data.postId}`,
         data,
         {
           headers: {
@@ -86,11 +89,11 @@ export const editPostMiddleware = createAsyncThunk(
 
 export const deletePostMiddleware = createAsyncThunk(
   "type/middlewareDeletePost",
-  async () => {
+  async (deletePostId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3300/api/post/${localStorage.getItem("postId")}`,
-        
+        `http://localhost:3300/api/post/${deletePostId}`,
+
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -125,4 +128,4 @@ export const likeDislikePostMiddleware = createAsyncThunk(
 );
 
 export default postSlice.reducer;
-export const { getPost, postAdded } = postSlice.actions;
+export const { getPost, postAdded, editMyPost } = postSlice.actions;

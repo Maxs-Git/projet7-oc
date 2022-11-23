@@ -12,7 +12,6 @@ function CreatePost() {
   const [image, setImage] = useState("");
   const [createPost, setCreatePost] = useState(true);
   const userData = useSelector((state) => state.user);
-  console.log(userData.user.lastName);
   function userPost(event) {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();

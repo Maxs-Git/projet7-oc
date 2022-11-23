@@ -2,7 +2,10 @@ const Post = require("../models/Post");
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
+  // const postObject = JSON.parse(req.body);
+  console.log(req.file);
   const postObject = req.body;
+  console.log(postObject);
   delete postObject._id;
   delete postObject._userId;
   const post = new Post({
