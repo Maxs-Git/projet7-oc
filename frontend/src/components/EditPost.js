@@ -12,6 +12,8 @@ function EditPost() {
   const [image, setImage] = useState("");
   const showMyPost = useSelector((state) => state.post.postEdit.postShow);
   const postId = useSelector((state) => state.post.postEdit.postId);
+  const editTitle = useSelector((state) => state.post.postEdit.title);
+  const editText = useSelector((state) => state.post.postEdit.textContent);
 
   function userPost(e) {
     e.nativeEvent.stopPropagation();
@@ -24,13 +26,21 @@ function EditPost() {
       imageUrl: image,
       postId: postId,
     };
-    dispatch(editMyPost({ postShow: false }));
+    dispatch(
+      editMyPost({
+        postId:postId,
+        postShow: false,
+        title: title,
+        textContent: text,
+        isUpdate: true,
+      })
+    );
     dispatch(editPostMiddleware(data));
   }
   return (
     <div>
       {showMyPost === true && (
-        <form id="postEdit" enctype="multipart/form-data">
+        <form id="postEdit">
           <button
             id="closeFormEdit"
             onClick={() => dispatch(editMyPost({ postShow: false }))}
@@ -41,7 +51,7 @@ function EditPost() {
             type="text"
             name="title"
             id="title-edit-input"
-            value={title}
+            defaultValue={editTitle}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="title"
           ></input>
@@ -50,7 +60,7 @@ function EditPost() {
             type="textarea"
             name="textZone"
             id="textZone-edit"
-            value={text}
+            defaultValue={editText}
             onChange={(e) => setText(e.target.value)}
             placeholder="text"
           ></textarea>
