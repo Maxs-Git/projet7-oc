@@ -1,47 +1,35 @@
 import "../styles/CreatePost.css";
-import { postAdded, middlewarePost } from "../app/features/post";
+import { middlewarePost } from "../app/features/post";
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 function CreatePost() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
-  const [createPost, setCreatePost] = useState(true);
+  const [image, setImage] = useState();
   const userData = useSelector((state) => state.user);
   function userPost(event) {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
+    const dataAndImage = new FormData();
+    console.log(image);
+    dataAndImage.append("name", userData.user.name);
+    dataAndImage.append("lastName", userData.user.lastName);
+    dataAndImage.append("title", title);
+    dataAndImage.append("textContent", text);
+    dataAndImage.append("image", image);
 
-    const data = {
-      name: userData.user.name,
-      lastName: userData.user.lastName,
-      title: title,
-      textContent: text,
-      imageUrl: image,
-    };
-    dispatch(middlewarePost(data));
+    dispatch(middlewarePost(dataAndImage));
 
-    dispatch(
-      postAdded({
-        name: userData.user.name,
-        lastName: userData.user.lastName,
-        title: title,
-        textContent: text,
-        imageUrl: image,
-      })
-    );
+    setTitle("");
+    setText("");
+    setImage();
   }
   return (
     <div id="postCreator">
-      <form id="postCreation">
-        <button id="closeForm" onClick={() => setCreatePost(false)}>
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
+      <form id="postCreation" encType="multipart/form-data">
         <input
           type="text"
           name="title"
@@ -60,13 +48,16 @@ function CreatePost() {
           placeholder="text"
         ></textarea>
 
+        <label for="file" id="file-upload-label">
+          Choose a file
+        </label>
         <input
           type="file"
           id="file"
           accept="image/png, image/jpeg"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        ></input>
+          name="image"
+          onChange={(e) => setImage(e.target.files[0])}
+        />
 
         <button
           id="postSubmit"

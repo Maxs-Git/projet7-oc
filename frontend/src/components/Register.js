@@ -4,13 +4,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { postRegister, registerUser } from "../app/features/user";
-import axios from "axios";
-// import { signup } from "../../../backend/controllers/User";
 
 function Register() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
-  //   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -28,16 +25,7 @@ function Register() {
       password: password,
     };
     dispatch(postRegister(data));
-
-    dispatch(
-      registerUser({
-        name: name,
-        lastName: lastName,
-        password: password,
-        email: email,
-      })
-    );
-    navigate("/post");
+    navigate("/login");
   }
 
   return (

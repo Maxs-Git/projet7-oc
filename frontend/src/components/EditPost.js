@@ -1,7 +1,7 @@
 import "../styles/EditPost.css";
 import { editPostMiddleware, editMyPost } from "../app/features/post";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
@@ -9,38 +9,45 @@ function EditPost() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState();
   const showMyPost = useSelector((state) => state.post.postEdit.postShow);
   const postId = useSelector((state) => state.post.postEdit.postId);
   const editTitle = useSelector((state) => state.post.postEdit.title);
   const editText = useSelector((state) => state.post.postEdit.textContent);
+
+  //leur donné le useSelector au state
 
   function userPost(e) {
     e.nativeEvent.stopPropagation();
     e.stopPropagation();
     e.preventDefault();
 
+    const dataAndImage = new FormData();
+    dataAndImage.append("title", title);
+    dataAndImage.append("textContent", text);
+    dataAndImage.append("image", image);
+    dataAndImage.append("postId", postId);
+
     const data = {
       title: title,
       textContent: text,
-      imageUrl: image,
       postId: postId,
     };
     dispatch(
       editMyPost({
-        postId:postId,
+        postId: postId,
         postShow: false,
         title: title,
         textContent: text,
         isUpdate: true,
       })
     );
-    dispatch(editPostMiddleware(data));
+    dispatch(editPostMiddleware(dataAndImage));
   }
   return (
     <div>
       {showMyPost === true && (
-        <form id="postEdit">
+        <form id="postEdit" encType="multipart/form-data">
           <button
             id="closeFormEdit"
             onClick={() => dispatch(editMyPost({ postShow: false }))}
@@ -64,13 +71,15 @@ function EditPost() {
             onChange={(e) => setText(e.target.value)}
             placeholder="text"
           ></textarea>
-
+          <label for="fileEdit" id="file-edit-label">
+            Choose a file
+          </label>
           <input
             type="file"
             id="fileEdit"
+            name="image"
             accept="image/png, image/jpeg"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
           ></input>
 
           <button

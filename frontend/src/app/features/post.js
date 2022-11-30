@@ -25,23 +25,35 @@ const postSlice = createSlice({
         (post) => post._id === state.postEdit.postId
       );
       if (findMyPost) {
+        console.log(state.postUpdate);
         findMyPost.title = state.postEdit.title;
         findMyPost.textContent = state.postEdit.textContent;
+        findMyPost.imageUrl = state.postEdit.imageUrl;
       }
+    },
+    deletePost: (state, action) => {
+      console.log(action.payload);
+      const deleteIndex = state.posts.findIndex(
+        (deletePost) => deletePost === state.posts.deleteOne
+      );
+      state.posts.splice(deleteIndex, 1);
     },
     likeReducer: (state, action) => {
       state.likeObject = action.payload;
       const likeUserExist = state.posts.find(
         (likeUser) => likeUser._id === state.likeObject.postId
       );
-      console.log(likeUserExist);
       if (likeUserExist) {
         likeUserExist.likes = state.likeObject.likes;
         likeUserExist.dislikes = state.likeObject.dislikes;
         likeUserExist.likeStatus = state.likeObject.likeStatus;
-        likeUserExist.dislikeStatus = state.dislikeObject.dislikeStatus;
+        likeUserExist.dislikeStatus = state.likeObject.dislikeStatus;
         if (likeUserExist.likeStatus) {
           likeUserExist.usersLiked.push(state.likeObject.postUserId);
+          const myIndexDislike = likeUserExist.usersDisliked.findIndex(
+            (dislikeUserId) => dislikeUserId === state.likeObject.postUserId
+          );
+          likeUserExist.usersDisliked.splice(myIndexDislike, 1);
         } else {
           const myIndexLike = likeUserExist.usersLiked.findIndex(
             (likeUserId) => likeUserId === state.likeObject.postUserId
@@ -59,24 +71,37 @@ const postSlice = createSlice({
         dislikeUserExist.likes = state.dislikeObject.likes;
         dislikeUserExist.dislikes = state.dislikeObject.dislikes;
         dislikeUserExist.dislikeStatus = state.dislikeObject.dislikeStatus;
-        dislikeUserExist.likeStatus = state.likeObject.likeStatus;
-        if (dislikeUserExist.dislikes) {
+        dislikeUserExist.likeStatus = state.dislikeObject.likeStatus;
+        if (dislikeUserExist.dislikeStatus) {
           dislikeUserExist.usersDisliked.push(state.dislikeObject.postUserId);
+          const myIndexLike = dislikeUserExist.usersLiked.findIndex(
+            (likeUserId) => likeUserId === state.likeObject.postUserId
+          );
+          dislikeUserExist.usersLiked.splice(myIndexLike, 1);
         } else {
-          const myIndexLike = dislikeUserExist.usersDisliked.findIndex(
+          const myIndexDislike = dislikeUserExist.usersDisliked.findIndex(
             (dislikeUserId) => dislikeUserId === state.dislikeObject.postUserId
           );
-          dislikeUserExist.usersDisliked.splice(myIndexLike, 1);
+          dislikeUserExist.usersDisliked.splice(myIndexDislike, 1);
         }
       }
     },
   },
   extraReducers: (builder) => {
     builder.addCase(middlewarePost.fulfilled, (state, action) => {
-      state = action.payload;
+      state.posts.push(action.payload);
     });
     builder.addCase(getPostMiddleware.fulfilled, (state, action) => {
       state.posts = action.payload;
+    });
+    builder.addCase(editPostMiddleware.fulfilled, (state, action) => {
+      console.log(state.posts);
+      state.postEdit.imageUrl = action.payload.imageUrl;
+    });
+
+    builder.addCase(deletePostMiddleware.fulfilled, (state, action) => {
+      console.log(state.posts);
+      state.posts.deletOne = action.payload;
     });
   },
 });
@@ -126,7 +151,7 @@ export const editPostMiddleware = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.put(
-        `http://localhost:3300/api/post/${data.postId}`,
+        `http://localhost:3300/api/post/${data.get("postId")}`,
         data,
         {
           headers: {
@@ -154,6 +179,7 @@ export const deletePostMiddleware = createAsyncThunk(
           },
         }
       );
+      console.log(response.data);
       return response.data;
     } catch (err) {
       console.error(err);

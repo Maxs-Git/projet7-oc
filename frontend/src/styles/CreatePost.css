@@ -1,17 +1,8 @@
 #postCreator {
-    left: 0;
-    right: 0;
-    padding: 10px;
-    width: 400px;
-    height: 320px;
-    margin-top: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 30px;
-    border: 2px solid #FD2D01;
-    background-color: rgb(255, 255, 255);
-    position: absolute;
-    z-index: 3;
+        margin: 50px auto;
+        width: 700px;
+        border-radius: 20px;
+        background-color: white;  
 }
 
 #postCreation {
@@ -19,23 +10,12 @@
     flex-direction: column;
 }
 
-#closeForm {
-    margin-left: 90%;
-    position: absolute;
-    cursor: pointer;
-    color: red;
-    border: none;
-    background:none;
-    height: 20px;
-    width: 15px;
-}
-
 #title-input {
     padding-left: 10px;
     border-radius: 10px;
     border: 2px solid #FD2D01;
     height: 20px;
-    width: 200px;
+    width: 40%;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: auto;
@@ -51,9 +31,28 @@
     margin-left: auto;
     margin-right: auto;
     resize: none;
-    width: 250px;
+    width: 80%;
     height: 150px;
+    font-weight: 700;
+    font-size: 1em;
 }
+
+input[type="file"] {
+    display: none;
+}
+#file-upload-label {
+    border-radius: 10px;
+    padding: 5px;
+    margin:10px auto 10px 9%;
+    width: 150px;
+    font-size: 1em;
+    font-weight: 700;
+    color: white;
+    background-color: #FD2D01;
+    display: inline-block;
+    cursor: pointer;
+}
+
 
 
 #postSubmit {
@@ -62,9 +61,13 @@
     background-color: #FD2D01;
     border: none;
     margin-top: 50px;
+    margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
+    font-weight: 700;
+    color: white;
+    font-size: 1em;
 }
 
 #postSubmit:hover {

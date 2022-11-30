@@ -5,6 +5,7 @@ const ObjectID = require("mongoose").Types.ObjectId;
 const User = require("../models/User");
 
 exports.signup = (req, res, next) => {
+  console.log(req.body);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -17,7 +18,7 @@ exports.signup = (req, res, next) => {
       user
         .save()
         .then(() => {
-          res.status(201).json({ message: "utilisateur créé !" });
+          res.status(201).json(user);
         })
         .catch((error) => res.status(400).json({ error }));
     })

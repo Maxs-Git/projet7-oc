@@ -1,7 +1,8 @@
-import {  Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Post from "../Post";
 import Banner from "../Banner";
 import React, { lazy } from "react";
+
 
 const Register = lazy(() => import("../Register"));
 const Login = lazy(() => import("../Login"));

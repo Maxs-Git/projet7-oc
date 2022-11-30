@@ -1,12 +1,9 @@
 import logo from "../assets/icon-left-font-monochrome-white.png";
 import "../styles/Banner.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import CreatePost from "./CreatePost";
+import { useSelector } from "react-redux";
 function Banner() {
-  const token = localStorage.getItem("token");
-
-  const [createPost, setCreatePost] = useState(false);
+  const userData = useSelector((state) => state.user);
   return (
     <header>
       <div className="img-banner">
@@ -14,21 +11,23 @@ function Banner() {
       </div>
 
       <div className="button-banner">
-        <button>
-          <Link to="/Login"> Login</Link>
-        </button>
-        <button>
-          <Link to="/Register"> Register</Link>
-        </button>
-        {/* {loggedIn =  true ? ( */}
-        <button>
-          <Link onClick={() => setCreatePost(true)}>ajouter un post</Link>
-        </button>
-        {/* // )} */}
-        {/* <button>Se deconnecter</button>
-        <button>Ajouter un post</button> */}
+        {userData.loggedIn === false ? (
+          <>
+            <button>
+              <Link to="/Login"> Login</Link>
+            </button>
+
+            <button>
+              <Link to="/Register"> Register</Link>
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 id="welcome">Bienvenue {userData.user.name}</h1>
+            <button>Se deconnecter</button>
+          </>
+        )}
       </div>
-      {createPost ? <CreatePost /> : null}
     </header>
   );
 }

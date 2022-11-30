@@ -15,20 +15,20 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import EditPost from "./EditPost";
+import CreatePost from "./CreatePost";
 
 function Post() {
   // console.log(postObject);
   const dispatch = useDispatch();
-  const post = useSelector((state) => state.post);
   const postStatus = useSelector((state) => state.post.status);
   const userData = useSelector((state) => state.user);
   const title = useSelector((state) => state.post.postEdit.title);
   const textUpdate = useSelector((state) => state.post.postEdit.textContent);
   const isUpdate = useSelector((state) => state.post.postEdit.isUpdate);
+  const imageUpdate = useSelector((state) => state.post.postEdit.imageUrl);
   const myPost = useSelector((state) => state.post.posts);
-  const dislikeState = useSelector((state) => state.post.dislikeObject);
-  const likeState = useSelector((state) => state.post.likeObject);
-
+  const myPostRender = useSelector((state) => state.post.posts);
+  const [deleteId, setDeleteId] = useState("");
   //affiche les posts
   useEffect(() => {
     if (postStatus === "idle") {
@@ -46,12 +46,15 @@ function Post() {
     e.preventDefault();
     setPostIdModify(e.target.dataset["id"]);
 
-    const tryPost = myPost.find((post) => e.target.dataset["id"] === post._id);
+    const postBeforeEdit = myPost.find(
+      (post) => e.target.dataset["id"] === post._id
+    );
 
     const editObject = {
-      title: tryPost.title,
-      textContent: tryPost.textContent,
       postId: e.target.dataset["id"],
+      title: postBeforeEdit.title,
+      textContent: postBeforeEdit.textContent,
+      imageUrl: postBeforeEdit.imageUrl,
       postShow: true,
     };
     dispatch(editMyPost(editObject));
@@ -69,78 +72,15 @@ function Post() {
     const findUserDislike = myPostLike.usersDisliked.find(
       (userId) => userId === userData.user.userId
     );
-
-    //   if (findUserLike) {
-    //     //si il existe
-    //     dispatch(
-    //       likeReducer({
-    //         postId: myPostLike._id,
-    //         postUserId: userData.user.userId,
-    //         likes: myPostLike.likes - 1,
-    //         dislikes: myPostLike.dislikes,
-    //         likeStatus: false,
-    //       })
-    //     );
-    //     dispatch(
-    //       likeDislikePostMiddleware({
-    //         userId: userData.user.userId,
-    //         postId: myPostLike._id,
-    //         like: 0,
-    //       })
-    //     );
-    //   } else {
-    //     //si il existe pas
-    //     dispatch(
-    //       likeReducer({
-    //         postUserId: userData.user.userId,
-    //         postId: myPostLike._id,
-    //         likes: myPostLike.likes + 1,
-    //         dislikes: myPostLike.dislikes,
-    //         likeStatus: true,
-    //       })
-    //     );
-    //     dispatch(
-    //       likeDislikePostMiddleware({
-    //         userId: userData.user.userId,
-    //         postId: myPostLike._id,
-    //         like: 1,
-    //       })
-    //     );
-    //     if (dislikeState.dislikeStatus) {
-    //       dispatch(
-    //         dislikeReducer({
-    //           postUserId: userData.user.userId,
-    //           postId: myPostLike._id,
-    //           likes: myPostLike.likes + 1,
-    //           dislikes: myPostLike.dislikes - 1,
-    //           dislikeStatus: false,
-    //         })
-    //       );
-    //       dispatch(
-    //         likeDislikePostMiddleware({
-    //           userId: userData.user.userId,
-    //           postId: myPostLike._id,
-    //           like: 0,
-    //         })
-    //       );
-    //       dispatch(
-    //         likeDislikePostMiddleware({
-    //           userId: userData.user.userId,
-    //           postId: myPostLike._id,
-    //           like: 1,
-    //         })
-    //       );
-    //     }
-    //   }
-
     if (findUserDislike) {
       dispatch(
-        dislikeReducer({
+        likeReducer({
           postUserId: userData.user.userId,
           postId: myPostLike._id,
           likes: myPostLike.likes + 1,
           dislikes: myPostLike.dislikes - 1,
           dislikeStatus: false,
+          likeStatus: true,
         })
       );
       dispatch(
@@ -165,6 +105,7 @@ function Post() {
           likes: myPostLike.likes - 1,
           dislikes: myPostLike.dislikes,
           likeStatus: false,
+          dislikeStatus: false,
         })
       );
       dispatch(
@@ -182,6 +123,7 @@ function Post() {
           likes: myPostLike.likes + 1,
           dislikes: myPostLike.dislikes,
           likeStatus: true,
+          dislikeStatus: false,
         })
       );
       dispatch(
@@ -203,82 +145,20 @@ function Post() {
       (post) => e.currentTarget.dataset["likeid"] === post._id
     );
     const findUserDislike = myPostDislike.usersDisliked.find(
-      () => userData.user.userId
+      (userId) => userId === userData.user.userId
     );
     const findUserLike = myPostDislike.usersLiked.find(
-      () => userData.user.userId
+      (userId) => userId === userData.user.userId
     );
-
-    // if (findUserDislike) {
-    //   //si il existe
-    //   dispatch(
-    //     dislikeReducer({
-    //       postId: myPostDislike._id,
-    //       postUserId: userData.user.userId,
-    //       likes: myPostDislike.likes,
-    //       dislikes: myPostDislike.dislikes - 1,
-    //       dislikeStatus: false,
-    //     })
-    //   );
-    //   dispatch(
-    //     likeDislikePostMiddleware({
-    //       userId: userData.user.userId,
-    //       postId: myPostDislike._id,
-    //       like: 0,
-    //     })
-    //   );
-    // } else {
-    //si il existe pas
-    //   dispatch(
-    //     dislikeReducer({
-    //       postUserId: userData.user.userId,
-    //       postId: myPostDislike._id,
-    //       likes: myPostDislike.likes,
-    //       dislikes: myPostDislike.dislikes + 1,
-    //       dislikeStatus: true,
-    //     })
-    //   );
-    //   dispatch(
-    //     likeDislikePostMiddleware({
-    //       userId: userData.user.userId,
-    //       postId: myPostDislike._id,
-    //       like: -1,
-    //     })
-    //   );
-    //   if (likeState.likeStatus) {
-    //     dispatch(
-    //       likeReducer({
-    //         postUserId: userData.user.userId,
-    //         postId: myPostDislike._id,
-    //         likes: myPostDislike.likes - 1,
-    //         dislikes: myPostDislike.dislikes + 1,
-    //         likeStatus: false,
-    //       })
-    //     );
-    //     dispatch(
-    //       likeDislikePostMiddleware({
-    //         userId: userData.user.userId,
-    //         postId: myPostDislike._id,
-    //         like: 0,
-    //       })
-    //     );
-    //     dispatch(
-    //       likeDislikePostMiddleware({
-    //         userId: userData.user.userId,
-    //         postId: myPostDislike._id,
-    //         like: -1,
-    //       })
-    //     );
-    //   }
-    // }
     if (findUserLike) {
       dispatch(
-        likeReducer({
+        dislikeReducer({
           postUserId: userData.user.userId,
           postId: myPostDislike._id,
           likes: myPostDislike.likes - 1,
           dislikes: myPostDislike.dislikes + 1,
           likeStatus: false,
+          dislikeStatus: true,
         })
       );
       dispatch(
@@ -303,6 +183,7 @@ function Post() {
           likes: myPostDislike.likes,
           dislikes: myPostDislike.dislikes - 1,
           dislikeStatus: false,
+          likeStatus: false,
         })
       );
       dispatch(
@@ -320,6 +201,7 @@ function Post() {
           likes: myPostDislike.likes,
           dislikes: myPostDislike.dislikes + 1,
           dislikeStatus: true,
+          likeStatus: false,
         })
       );
       dispatch(
@@ -332,13 +214,19 @@ function Post() {
     }
   }
   function deletePost(e) {
-    dispatch(deletePostMiddleware(e.target.dataset["id"]));
+    dispatch(deletePostMiddleware(e.target.dataset["delete"]));
+    dispatch(deletePost());
   }
+
+  const sortAllPost = myPostRender
+    .slice()
+    .sort((a, b) => b.orderDate.localeCompare(a.orderDate));
 
   return (
     <div>
-      {post.posts.map((post, index) => (
-        <div className="postcontainer" id={post.userId} key={post._id}>
+      <CreatePost />
+      {sortAllPost.map((post, index) => (
+        <div className="postcontainer" key={post._id}>
           <div id="name-area">
             <p>{post.name}</p>
             <p>{post.lastName}</p>
@@ -347,16 +235,20 @@ function Post() {
             <>
               <h2 className="title">{title}</h2>
               <div id="text-zone">
-                {textUpdate}
-                <img src={post.imageUrl}></img>
+                <p>{textUpdate}</p>
+                {post.imageUrl === "null" ? null : (
+                  <img src={imageUpdate} alt={post.name + "image"}></img>
+                )}
               </div>
             </>
           ) : (
             <>
               <h2 className="title">{post.title}</h2>
               <div id="text-zone">
-                {post.textContent}
-                <img src={post.imageUrl}></img>
+                <p>{post.textContent}</p>
+                {post.imageUrl === "null" ? null : (
+                  <img src={post.imageUrl} alt={post.name + "image"}></img>
+                )}
               </div>
             </>
           )}
@@ -396,7 +288,7 @@ function Post() {
                   modifier
                 </button>
                 <button
-                  data-id={post._id}
+                  data-delete={post._id}
                   onClick={(e) => {
                     deletePost(e);
                   }}
@@ -415,48 +307,3 @@ function Post() {
 }
 
 export default Post;
-
-// const dispatch = useDispatch();
-// const [title, setTitle] = useState("");
-// const [text, setText] = useState("");
-
-// function userPost(event) {
-//   event.nativeEvent.stopPropagation();
-//   event.stopPropagation();
-//   event.preventDefault();
-
-//   const data = { title: title, textContent: text };
-//   dispatch(middlewarePost(data));
-
-//   dispatch(postAdded({ title: title, textContent: text }));
-// }
-
-// {/* <form>
-//       <label for="title">Titre:</label>
-//       <input
-//         type="text"
-//         name="title"
-//         id="title-input"
-//         value={title}
-//         onChange={(e) => setTitle(e.target.value)}
-//         placeholder="title"
-//       ></input>
-//       <input
-//         type="text"
-//         name="textZone"
-//         id="textZone"
-//         value={text}
-//         onChange={(e) => setText(e.target.value)}
-//         placeholder="Email"
-//       ></input>
-
-//       <button
-//         id="login-button"
-//         type="submit"
-//         onClick={(event) => {
-//           userPost(event);
-//         }}
-//       >
-//         post
-//       </button>
-//     </form> */}

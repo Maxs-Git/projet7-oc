@@ -3,12 +3,8 @@ import axios from "axios";
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: { user: null, },
+  initialState: { user: null, loggedIn: false },
   reducers: {
-    registerUser: (state, action) => {
-      state.user = action.payload;
-    },
-
     loginUser: (state, action) => {
       state.user = action.payload;
     },
@@ -20,11 +16,9 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
       state.user = action.payload;
+      state.loggedIn = true;
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("userId", action.payload.userId);
-    });
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      state.user = action.payload;
     });
   },
 });

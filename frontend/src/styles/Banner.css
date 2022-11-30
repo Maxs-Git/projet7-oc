@@ -23,9 +23,14 @@ header{
 }
 
 .button-banner {
+    display: flex;
     margin-top:  auto;
     margin-bottom:  auto;
     height: 50px;
+}
+#welcome {
+    margin-right: 60px;
+    font-size: 1.6em;
 }
 
 .button-banner > button {

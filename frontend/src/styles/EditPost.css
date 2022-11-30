@@ -38,10 +38,17 @@
     outline:none;
 }
 
-#fileEdit {
-    border: none;
-    background: none;
-    margin: 10px 30px;
+#file-edit-label {
+    border-radius: 10px;
+    padding: 5px;
+    margin:10px auto 10px 4%;
+    width: 150px;
+    font-size: 1em;
+    font-weight: 700;
+    color: white;
+    background-color: #FD2D01;
+    display: inline-block;
+    cursor: pointer;
 }
 
 #postSubmitEdit {
