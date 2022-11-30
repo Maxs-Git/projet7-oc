@@ -5,7 +5,6 @@ const ObjectID = require("mongoose").Types.ObjectId;
 const User = require("../models/User");
 
 exports.signup = (req, res, next) => {
-  console.log(req.body);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -48,6 +47,7 @@ exports.login = (req, res, next) => {
                 name: user.name,
                 lastName: user.lastName,
                 userId: user._id,
+                role: user.role,
                 token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
                   expiresIn: "24h",
                 }),

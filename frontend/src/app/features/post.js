@@ -4,9 +4,10 @@ import axios from "axios";
 const initialState = {
   posts: [],
   status: "idle",
-  postEdit: { title: "", lastname: null, postId: null },
+  postEdit: { title: "", lastname: null, postId: null, imageUrl: null },
   likeObject: {},
   dislikeObject: {},
+  deleteOne: {},
 };
 
 const postSlice = createSlice({
@@ -25,18 +26,10 @@ const postSlice = createSlice({
         (post) => post._id === state.postEdit.postId
       );
       if (findMyPost) {
-        console.log(state.postUpdate);
         findMyPost.title = state.postEdit.title;
         findMyPost.textContent = state.postEdit.textContent;
         findMyPost.imageUrl = state.postEdit.imageUrl;
       }
-    },
-    deletePost: (state, action) => {
-      console.log(action.payload);
-      const deleteIndex = state.posts.findIndex(
-        (deletePost) => deletePost === state.posts.deleteOne
-      );
-      state.posts.splice(deleteIndex, 1);
     },
     likeReducer: (state, action) => {
       state.likeObject = action.payload;
@@ -95,13 +88,15 @@ const postSlice = createSlice({
       state.posts = action.payload;
     });
     builder.addCase(editPostMiddleware.fulfilled, (state, action) => {
-      console.log(state.posts);
       state.postEdit.imageUrl = action.payload.imageUrl;
     });
 
     builder.addCase(deletePostMiddleware.fulfilled, (state, action) => {
-      console.log(state.posts);
-      state.posts.deletOne = action.payload;
+      state.deleteOne = action.payload;
+      const deleteIndex = state.posts.findIndex(
+        (deletePost) => deletePost._id === state.deleteOne
+      );
+      state.posts.splice(deleteIndex, 1);
     });
   },
 });
@@ -168,10 +163,11 @@ export const editPostMiddleware = createAsyncThunk(
 
 export const deletePostMiddleware = createAsyncThunk(
   "type/middlewareDeletePost",
-  async (deletePostId) => {
+  async (data) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3300/api/post/${deletePostId}`,
+        `http://localhost:3300/api/post/${data.id}`,
+        data,
 
         {
           headers: {
@@ -179,7 +175,6 @@ export const deletePostMiddleware = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.error(err);

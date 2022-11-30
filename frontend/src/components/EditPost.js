@@ -28,11 +28,6 @@ function EditPost() {
     dataAndImage.append("image", image);
     dataAndImage.append("postId", postId);
 
-    const data = {
-      title: title,
-      textContent: text,
-      postId: postId,
-    };
     dispatch(
       editMyPost({
         postId: postId,

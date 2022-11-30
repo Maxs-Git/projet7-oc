@@ -18,7 +18,6 @@ import EditPost from "./EditPost";
 import CreatePost from "./CreatePost";
 
 function Post() {
-  // console.log(postObject);
   const dispatch = useDispatch();
   const postStatus = useSelector((state) => state.post.status);
   const userData = useSelector((state) => state.user);
@@ -28,7 +27,6 @@ function Post() {
   const imageUpdate = useSelector((state) => state.post.postEdit.imageUrl);
   const myPost = useSelector((state) => state.post.posts);
   const myPostRender = useSelector((state) => state.post.posts);
-  const [deleteId, setDeleteId] = useState("");
   //affiche les posts
   useEffect(() => {
     if (postStatus === "idle") {
@@ -214,8 +212,12 @@ function Post() {
     }
   }
   function deletePost(e) {
-    dispatch(deletePostMiddleware(e.target.dataset["delete"]));
-    dispatch(deletePost());
+    dispatch(
+      deletePostMiddleware({
+        id: e.target.dataset["delete"],
+        role: userData.user.role,
+      })
+    );
   }
 
   const sortAllPost = myPostRender
@@ -236,7 +238,7 @@ function Post() {
               <h2 className="title">{title}</h2>
               <div id="text-zone">
                 <p>{textUpdate}</p>
-                {post.imageUrl === "null" ? null : (
+                {post.imageUrl === false ? null : (
                   <img src={imageUpdate} alt={post.name + "image"}></img>
                 )}
               </div>
@@ -246,7 +248,7 @@ function Post() {
               <h2 className="title">{post.title}</h2>
               <div id="text-zone">
                 <p>{post.textContent}</p>
-                {post.imageUrl === "null" ? null : (
+                {post.imageUrl === false ? null : (
                   <img src={post.imageUrl} alt={post.name + "image"}></img>
                 )}
               </div>
@@ -277,6 +279,28 @@ function Post() {
               </button>
             </div>
             {userData.user.userId === post.userId && (
+              <div id="technic-button">
+                <button
+                  data-id={post._id}
+                  id="modif"
+                  onClick={(e) => {
+                    showEditPost(e);
+                  }}
+                >
+                  modifier
+                </button>
+                <button
+                  data-delete={post._id}
+                  onClick={(e) => {
+                    deletePost(e);
+                  }}
+                  id="delete"
+                >
+                  supprimer
+                </button>
+              </div>
+            )}
+            {userData.user.role === true && (
               <div id="technic-button">
                 <button
                   data-id={post._id}

@@ -85,17 +85,4 @@ function Register() {
   );
 }
 
-// axios.get('http://localhost:3000/api/auth/signup')
-//   .then(function (response) {
-//     // en cas de réussite de la requête
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // en cas d’échec de la requête
-//     console.log(error);
-//   })
-//   .then(function () {
-//     // dans tous les cas
-//   });
-
 export default Register;
