@@ -14,6 +14,7 @@ function CreatePost() {
     event.stopPropagation();
     event.preventDefault();
     const dataAndImage = new FormData();
+    console.log(userData.user.name);
     dataAndImage.append("name", userData.user.name);
     dataAndImage.append("lastName", userData.user.lastName);
     dataAndImage.append("title", title);

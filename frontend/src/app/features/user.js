@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 export const userSlice = createSlice({
   name: "user",
   initialState: { user: null, loggedIn: false },
@@ -19,6 +20,7 @@ export const userSlice = createSlice({
       state.loggedIn = true;
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("userId", action.payload.userId);
+      
     });
   },
 });

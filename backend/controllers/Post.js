@@ -1,15 +1,19 @@
 const Post = require("../models/Post");
 const fs = require("fs");
-const { log } = require("console");
+const User = require("../models/User");
 
 exports.createPost = (req, res, next) => {
   // const postObject = JSON.parse(req.body);
   const postObject = req.body;
   delete postObject._id;
   delete postObject._userId;
+  const myUser = User.findOne({ id: req.auth.userId });
+  console.log(myUser);
   if (req.file) {
     const post = new Post({
       ...postObject,
+      name: myUser.name,
+      lastName: myUser.lastName,
       userId: req.auth.userId,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${
         req.file.filename
@@ -66,7 +70,7 @@ exports.modifyPost = (req, res, next) => {
   delete postObject._userId;
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId === req.auth.userId || req.body.role === true) {
+      if (post.userId === req.auth.userId || req.auth.isAdmin === true) {
         Post.updateOne(
           { _id: req.params.id },
           { ...postObject, _id: req.params.id }
@@ -85,9 +89,10 @@ exports.modifyPost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   console.log(req.body);
+  console.log(req.isAdmin);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId === req.auth.userId || req.body.role === true) {
+      if (post.userId === req.auth.userId || req.auth.isAdmin === true) {
         const filename = post.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
           Post.deleteOne({ _id: req.params.id })

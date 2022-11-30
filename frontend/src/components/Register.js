@@ -3,7 +3,7 @@ import "../styles/Register.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { postRegister, registerUser } from "../app/features/user";
+import { postRegister } from "../app/features/user";
 
 function Register() {
   const dispatch = useDispatch();
