@@ -3,12 +3,14 @@ import "../styles/Login.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../app/features/user";
-import { postLogin } from "../app/features/user";
+import { postLogin, loginUser } from "../app/features/user";
+import { useSelector } from "react-redux";
 
 function Login() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const userLoad = useSelector((state) => state.user.userLoad);
+  console.log(userLoad);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -19,12 +21,15 @@ function Login() {
     // whatever you want to send
     const data = { email: email, password: password };
     dispatch(postLogin(data));
+  }
 
-    dispatch(loginUser({ password: password, email: email }));
+  if (userLoad === "succeeded") {
+    dispatch(loginUser());
     navigate("/post");
   }
+
   return (
-    <div id="container">
+    <div id="login-container">
       <h1>Login</h1>
 
       <form>
@@ -56,7 +61,17 @@ function Login() {
 
       <p>
         Pas inscrit
-        <Link to="/Register"> enregistrez-vous</Link>
+        <Link
+          to="/Register"
+          style={{
+            fontWeight: 600,
+            textDecoration: "none",
+            color: "#FD2D01",
+          }}
+        >
+          {" "}
+          enregistrez-vous
+        </Link>
       </p>
     </div>
   );

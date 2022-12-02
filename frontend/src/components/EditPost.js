@@ -10,6 +10,7 @@ function EditPost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [image, setImage] = useState();
+  const editPostStatus = useSelector((state) => state.post.editPostStatus);
   const showMyPost = useSelector((state) => state.post.postEdit.postShow);
   const postId = useSelector((state) => state.post.postEdit.postId);
   const editTitle = useSelector((state) => state.post.postEdit.title);
@@ -27,7 +28,9 @@ function EditPost() {
     dataAndImage.append("textContent", text);
     dataAndImage.append("image", image);
     dataAndImage.append("postId", postId);
-
+    dispatch(editPostMiddleware(dataAndImage));
+  }
+  if (editPostStatus === "finish") {
     dispatch(
       editMyPost({
         postId: postId,
@@ -35,9 +38,9 @@ function EditPost() {
         title: title,
         textContent: text,
         isUpdate: true,
+        imageUrl: "",
       })
     );
-    dispatch(editPostMiddleware(dataAndImage));
   }
   return (
     <div>
@@ -50,6 +53,7 @@ function EditPost() {
             <FontAwesomeIcon icon={faXmark} />
           </button>
           <input
+            maxLength="40"
             type="text"
             name="title"
             id="title-edit-input"

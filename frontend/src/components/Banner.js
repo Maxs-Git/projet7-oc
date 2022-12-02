@@ -1,4 +1,6 @@
-import logo from "../assets/icon-left-font-monochrome-white.png";
+import logo from "../assets/icon-left-font-monochrome-white.svg";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Banner.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -19,23 +21,47 @@ function Banner() {
       <div className="button-banner">
         {userData.loggedIn === false ? (
           <>
-            <button>
-              <Link to="/Login"> Login</Link>
+            {/* <button>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  fontSize: 15,
+                  fontWeight: 600,
+                  color: "black",
+                }}
+                to="/Login"
+              >
+                Login
+              </Link>
             </button>
 
             <button>
-              <Link to="/Register"> Register</Link>
-            </button>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  fontSize: 15,
+                  fontWeight: 600,
+                  color: "black",
+                  ":hover": { color: "white" },
+                }}
+                to="/Register"
+              >
+                Register
+              </Link>
+            </button> */}
           </>
         ) : (
           <>
-            <h1 id="welcome">Bienvenue {userData.user.name}</h1>
+            <h1 id="welcome">
+              <span className="white">Bienvenue</span> {userData.user.name}
+            </h1>
             <button
+              className="Disconnect"
               onClick={(e) => {
                 disconnectUser(e);
               }}
             >
-              Se deconnecter
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
             </button>
           </>
         )}

@@ -1,16 +1,17 @@
 #postCreator {
-        margin: 50px auto;
-        width: 700px;
-        border-radius: 20px;
-        background-color: white;  
+    margin: 50px auto;
+    width: 700px;
+    border-radius: 20px;
+    background-color: white;  
 }
-
 #postCreation {
     display: flex;
     flex-direction: column;
 }
 
 #title-input {
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 10px;
     border-radius: 10px;
     border: 2px solid #FD2D01;
@@ -20,7 +21,7 @@
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-
+    font-size: 1em;
 }
 
 #textZone {
@@ -33,8 +34,8 @@
     resize: none;
     width: 80%;
     height: 150px;
-    font-weight: 700;
-    font-size: 1em;
+    font-weight: 500;
+    font-size: 1.2em;
 }
 
 input[type="file"] {
@@ -51,8 +52,12 @@ input[type="file"] {
     background-color: #FD2D01;
     display: inline-block;
     cursor: pointer;
+    border: 2px solid #FD2D01;
 }
-
+#file-upload-label:hover {
+    background-color:white ;
+    color: #FD2D01;
+}
 
 
 #postSubmit {
@@ -75,4 +80,12 @@ input[type="file"] {
     color: #FD2D01;
     border: 2px solid #FD2D01;
     background-color: white;
+}
+@media screen and (max-width: 750px) {
+    #postCreator {
+        width: 95%;
+    }
+    #postSubmit {
+        margin-top: 30px;
+    }
 }

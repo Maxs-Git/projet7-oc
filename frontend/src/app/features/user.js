@@ -1,26 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 export const userSlice = createSlice({
   name: "user",
-  initialState: { user: null, loggedIn: false },
+  initialState: { user: null, loggedIn: false, userLoad: "idle" },
   reducers: {
     loginUser: (state, action) => {
-      state.user = action.payload;
-    },
-
-    thisUser: (state, action) => {
-      state.user = action.payload;
+      console.log(action.payload);
+      state.loggedIn = true;
+      localStorage.setItem("token", state.user.token);
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(postLogin.pending, (state, action) => {
+      state.userLoad = "pending";
+    });
     builder.addCase(postLogin.fulfilled, (state, action) => {
+      console.log(state.user);
       state.user = action.payload;
-      state.loggedIn = true;
-      localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("userId", action.payload.userId);
-      
+      state.userLoad = "succeeded";
+      console.log(state.user);
+      console.log(action.payload);
     });
   },
 });
@@ -49,6 +49,7 @@ export const postRegister = createAsyncThunk(
       // const userToken = response.data.token;
       return response.data;
     } catch (err) {
+      window.alert("mot de passe trop court ou email deja utilisé");
       console.error(err);
     }
   }

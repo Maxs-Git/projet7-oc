@@ -1,4 +1,5 @@
 import "../styles/Post.css";
+
 import {
   deletePostMiddleware,
   getPostMiddleware,
@@ -212,12 +213,7 @@ function Post() {
     }
   }
   function deletePost(e) {
-    dispatch(
-      deletePostMiddleware({
-        id: e.target.dataset["delete"],
-        role: userData.user.role,
-      })
-    );
+    dispatch(deletePostMiddleware(e.target.dataset["delete"]));
   }
 
   const sortAllPost = myPostRender
@@ -229,16 +225,16 @@ function Post() {
       <CreatePost />
       {sortAllPost.map((post, index) => (
         <div className="postcontainer" key={post._id}>
-          <div id="name-area">
+          <div className="name-area">
             <p>{post.name}</p>
             <p>{post.lastName}</p>
           </div>
           {postIdModify === post._id && isUpdate === true ? (
             <>
               <h2 className="title">{title}</h2>
-              <div id="text-zone">
+              <div className="text-zone">
                 <p>{textUpdate}</p>
-                {post.imageUrl === false ? null : (
+                {post.imageUrl === "" ? null : (
                   <img src={imageUpdate} alt={post.name + "image"}></img>
                 )}
               </div>
@@ -246,18 +242,18 @@ function Post() {
           ) : (
             <>
               <h2 className="title">{post.title}</h2>
-              <div id="text-zone">
+              <div className="text-zone">
                 <p>{post.textContent}</p>
-                {post.imageUrl === false ? null : (
+                {post.imageUrl === "" ? null : (
                   <img src={post.imageUrl} alt={post.name + "image"}></img>
                 )}
               </div>
             </>
           )}
-          <div id="button-area">
-            <div id="likeDislike-area">
+          <div className="button-area">
+            <div className="likeDislike-area">
               <button
-                id="like"
+                className="like"
                 data-likeid={post._id}
                 onClick={(e) => {
                   likef(e);
@@ -268,7 +264,7 @@ function Post() {
               </button>
 
               <button
-                id="dislike"
+                className="dislike"
                 data-likeid={post._id}
                 onClick={(e) => {
                   dislikef(e);
@@ -278,11 +274,11 @@ function Post() {
                 {post.dislikes}
               </button>
             </div>
-            {userData.user.userId === post.userId && (
-              <div id="technic-button">
+            {userData.user.role === true ? (
+              <div className="technic-button">
                 <button
                   data-id={post._id}
-                  id="modif"
+                  className="modif"
                   onClick={(e) => {
                     showEditPost(e);
                   }}
@@ -294,33 +290,34 @@ function Post() {
                   onClick={(e) => {
                     deletePost(e);
                   }}
-                  id="delete"
+                  className="delete"
                 >
                   supprimer
                 </button>
               </div>
-            )}
-            {userData.user.role === true && (
-              <div id="technic-button">
-                <button
-                  data-id={post._id}
-                  id="modif"
-                  onClick={(e) => {
-                    showEditPost(e);
-                  }}
-                >
-                  modifier
-                </button>
-                <button
-                  data-delete={post._id}
-                  onClick={(e) => {
-                    deletePost(e);
-                  }}
-                  id="delete"
-                >
-                  supprimer
-                </button>
-              </div>
+            ) : (
+              userData.user.userId === post.userId && (
+                <div className="technic-button">
+                  <button
+                    data-id={post._id}
+                    className="modif"
+                    onClick={(e) => {
+                      showEditPost(e);
+                    }}
+                  >
+                    modifier
+                  </button>
+                  <button
+                    data-delete={post._id}
+                    onClick={(e) => {
+                      deletePost(e);
+                    }}
+                    className="delete"
+                  >
+                    supprimer
+                  </button>
+                </div>
+              )
             )}
           </div>
           {postIdModify === post._id ? <EditPost /> : null}

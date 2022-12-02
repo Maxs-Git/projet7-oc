@@ -1,4 +1,5 @@
-#container {
+#login-container {
+    border-radius: 20px;
     margin: 100px auto;
     background-color: white;
     height: 400px;
@@ -6,10 +7,11 @@
 }
 
 h1 {
+    padding-top: 10px;
    text-align: center;
 }
 
-#container > form {
+#login-container > form {
     margin:20px 50px;
 }
 
@@ -18,15 +20,16 @@ h1 {
     padding: 5px 0px 5px 5px;
     margin-top: 30px;
     border: none;
-    border-bottom: 3px solid #dababa;
+    border: 3px solid #dababa;
+    border-radius: 20px;
 }
 
 #password:hover {
-    border-color: lightblue;
+    border-color: #FD2D01;
 }
 
 #email:hover {
-    border-color: lightblue;
+    border-color: #FD2D01;
 }
 
 input:focus {
@@ -52,7 +55,7 @@ input:focus {
     background-color: rgb(217, 217, 217);
 }
 
-#container > p {
+#login-container > p {
     text-align: center;
 }
 

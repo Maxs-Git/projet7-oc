@@ -15,9 +15,9 @@ function CreatePost() {
     event.preventDefault();
     const dataAndImage = new FormData();
     console.log(userData.user.name);
+    dataAndImage.append("title", title);
     dataAndImage.append("name", userData.user.name);
     dataAndImage.append("lastName", userData.user.lastName);
-    dataAndImage.append("title", title);
     dataAndImage.append("textContent", text);
     dataAndImage.append("image", image);
 
@@ -31,6 +31,7 @@ function CreatePost() {
     <div id="postCreator">
       <form id="postCreation" encType="multipart/form-data">
         <input
+          maxLength="40"
           type="text"
           name="title"
           id="title-input"

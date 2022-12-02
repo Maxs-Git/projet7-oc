@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   posts: [],
   status: "idle",
-  postEdit: { title: "", lastname: null, postId: null, imageUrl: null },
+  postEdit: { title: "", lastname: null, postId: null, imageUrl: "" },
   likeObject: {},
   dislikeObject: {},
   deleteOne: {},
@@ -84,11 +84,19 @@ const postSlice = createSlice({
     builder.addCase(middlewarePost.fulfilled, (state, action) => {
       state.posts.push(action.payload);
     });
+    builder.addCase(middlewarePost.rejected, (state, action) => {
+      window.alert("Veuillez refaire votre post.");
+    });
     builder.addCase(getPostMiddleware.fulfilled, (state, action) => {
       state.posts = action.payload;
     });
+    builder.addCase(editPostMiddleware.pending, (state, action) => {
+      state.editPostStatus = "loading";
+    });
+
     builder.addCase(editPostMiddleware.fulfilled, (state, action) => {
-      state.postEdit.imageUrl = action.payload.imageUrl;
+      state.postEdit = action.payload;
+      state.editPostStatus = "finish";
     });
 
     builder.addCase(deletePostMiddleware.fulfilled, (state, action) => {
@@ -103,7 +111,7 @@ const postSlice = createSlice({
 
 export const middlewarePost = createAsyncThunk(
   "type/middlewarePost",
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:3300/api/post/",
@@ -116,7 +124,8 @@ export const middlewarePost = createAsyncThunk(
       );
       return response.data;
     } catch (err) {
-      console.error(err);
+      console.log(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -143,7 +152,7 @@ export const getPostMiddleware = createAsyncThunk(
 
 export const editPostMiddleware = createAsyncThunk(
   "type/middlewareEditPost",
-  async (data) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await axios.put(
         `http://localhost:3300/api/post/${data.get("postId")}`,
@@ -156,7 +165,7 @@ export const editPostMiddleware = createAsyncThunk(
       );
       return response.data;
     } catch (err) {
-      console.error(err);
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -166,8 +175,7 @@ export const deletePostMiddleware = createAsyncThunk(
   async (data) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3300/api/post/${data.id}`,
-        data,
+        `http://localhost:3300/api/post/${data}`,
 
         {
           headers: {

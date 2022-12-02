@@ -8,12 +8,9 @@ exports.createPost = (req, res, next) => {
   delete postObject._id;
   delete postObject._userId;
   const myUser = User.findOne({ id: req.auth.userId });
-  console.log(myUser);
   if (req.file) {
     const post = new Post({
       ...postObject,
-      name: myUser.name,
-      lastName: myUser.lastName,
       userId: req.auth.userId,
       imageUrl: `${req.protocol}://${req.get("host")}/images/${
         req.file.filename
@@ -65,7 +62,7 @@ exports.modifyPost = (req, res, next) => {
           req.file.filename
         }`,
       }
-    : { ...req.body };
+    : { ...req.body, imageUrl: "" };
 
   delete postObject._userId;
   Post.findOne({ _id: req.params.id })

@@ -25,11 +25,12 @@ function Register() {
       password: password,
     };
     dispatch(postRegister(data));
+
     navigate("/login");
   }
 
   return (
-    <div id="container">
+    <div id="register-container">
       <h1>Register</h1>
 
       <form
@@ -58,6 +59,7 @@ function Register() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
+        <div className="email error"></div>
         <input
           id="password"
           type="password"
@@ -79,7 +81,16 @@ function Register() {
 
       <p>
         Deja inscrit?
-        <Link to="/Login"> connectez vous</Link>
+        <Link
+          to="/Login"
+          style={{
+            fontWeight: 600,
+            textDecoration: "none",
+            color: "#FD2D01",
+          }}
+        >
+          connectez vous
+        </Link>
       </p>
     </div>
   );

@@ -2,7 +2,7 @@ body {
     background-color:  #4E5166;
 }
 
-#container {
+#register-container {
     border-radius: 20px;
     margin: 100px auto;
     background-color: white;
@@ -14,11 +14,11 @@ h1 {
    text-align: center;
 }
 
-#container > form {
+#register-container > form {
     margin:20px 50px;
 }
 
-#email, #password,#name,#lastName {
+#email,#password,#name,#lastName {
     width: 100%;
     padding: 8px 0px 8px 8px;
     margin-top: 30px;
@@ -27,12 +27,20 @@ h1 {
     border: 3px solid #dababa;
 }
 
+#lastName:hover {
+    border-color: #FD2D01;
+}
+
+#name:hover {
+    border-color: #FD2D01;
+}
+
 #password:hover {
-    border-color: lightblue;
+    border-color: #FD2D01;
 }
 
 #email:hover {
-    border-color: lightblue;
+    border-color: #FD2D01;
 }
 
 input:focus {
@@ -57,7 +65,7 @@ input:focus {
     background-color: rgb(217, 217, 217);
 }
 
-#container > p {
+#register-container > p {
     text-align: center;
 }
 
