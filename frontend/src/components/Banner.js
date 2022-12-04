@@ -2,9 +2,9 @@ import logo from "../assets/icon-left-font-monochrome-white.svg";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../styles/Banner.css";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+//deconnect notre utilisateur si il est co
 function disconnectUser() {
   window.location.replace("http://localhost:3000/login");
   localStorage.clear();

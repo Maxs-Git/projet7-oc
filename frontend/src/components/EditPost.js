@@ -10,19 +10,16 @@ function EditPost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [image, setImage] = useState();
-  const editPostStatus = useSelector((state) => state.post.editPostStatus);
   const showMyPost = useSelector((state) => state.post.postEdit.postShow);
   const postId = useSelector((state) => state.post.postEdit.postId);
   const editTitle = useSelector((state) => state.post.postEdit.title);
   const editText = useSelector((state) => state.post.postEdit.textContent);
 
-  //leur donné le useSelector au state
-
   function userPost(e) {
     e.nativeEvent.stopPropagation();
     e.stopPropagation();
     e.preventDefault();
-
+    //on récupere les données que l'utilisateur a rentrer et on les dispatch sous un format qui supporte les images
     const dataAndImage = new FormData();
     dataAndImage.append("title", title);
     dataAndImage.append("textContent", text);
@@ -30,18 +27,20 @@ function EditPost() {
     dataAndImage.append("postId", postId);
     dispatch(editPostMiddleware(dataAndImage));
   }
-  if (editPostStatus === "finish") {
-    dispatch(
-      editMyPost({
-        postId: postId,
-        postShow: false,
-        title: title,
-        textContent: text,
-        isUpdate: true,
-        imageUrl: "",
-      })
-    );
-  }
+
+  //si la requete a l'api a fini on dispatch
+  // if (editPostStatus === "finish") {
+  //   dispatch(
+  //     editMyPost({
+  //       postId: postId,
+  //       postShow: false,
+  //       title: title,
+  //       textContent: text,
+  //       isUpdate: true,
+  //       imageUrl: "",
+  //     })
+  //   );
+  // }
   return (
     <div>
       {showMyPost === true && (
@@ -70,7 +69,7 @@ function EditPost() {
             onChange={(e) => setText(e.target.value)}
             placeholder="text"
           ></textarea>
-          <label for="fileEdit" id="file-edit-label">
+          <label htmlFor="fileEdit" id="file-edit-label">
             Choose a file
           </label>
           <input

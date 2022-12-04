@@ -22,12 +22,14 @@ function Post() {
   const dispatch = useDispatch();
   const postStatus = useSelector((state) => state.post.status);
   const userData = useSelector((state) => state.user);
-  const title = useSelector((state) => state.post.postEdit.title);
-  const textUpdate = useSelector((state) => state.post.postEdit.textContent);
-  const isUpdate = useSelector((state) => state.post.postEdit.isUpdate);
-  const imageUpdate = useSelector((state) => state.post.postEdit.imageUrl);
   const myPost = useSelector((state) => state.post.posts);
   const myPostRender = useSelector((state) => state.post.posts);
+
+  //regarde si note utilisateur est connécté
+  if (userData.loggedIn === false) {
+    window.location.assign("http://localhost:3000/Login");
+  }
+
   //affiche les posts
   useEffect(() => {
     if (postStatus === "idle") {
@@ -36,9 +38,8 @@ function Post() {
   }, [postStatus, dispatch]);
 
   const [postIdModify, setPostIdModify] = useState("");
-  //////////////////////
 
-  //////show mes posts
+  //affiche le rendu édité d'un post
   function showEditPost(e) {
     e.nativeEvent.stopPropagation();
     e.stopPropagation();
@@ -59,21 +60,25 @@ function Post() {
     dispatch(editMyPost(editObject));
   }
 
-  /////////
+  /////////function de like
   function likef(e) {
+    //compare l'id du post que l'on veut like
     const myPostLike = myPost.find(
       (post) => e.currentTarget.dataset["likeid"] === post._id
     );
+
+    //regarde dans le array du like voir si notre utilisateur n'est pas dedans
     const findUserLike = myPostLike.usersLiked.find(
       (userId) => userId === userData.user.userId
     );
-
+    //regarde dans le array du dislike voir si notre utilisateur n'est pas dedans
     const findUserDislike = myPostLike.usersDisliked.find(
       (userId) => userId === userData.user.userId
     );
     if (findUserDislike) {
       dispatch(
         likeReducer({
+          //si il est dans le array de dislike on le retire et l'ajoute dans celui du like
           postUserId: userData.user.userId,
           postId: myPostLike._id,
           likes: myPostLike.likes + 1,
@@ -97,6 +102,7 @@ function Post() {
         })
       );
     } else if (findUserLike) {
+      //si l'user a deja liké un post on le retire
       dispatch(
         likeReducer({
           postId: myPostLike._id,
@@ -115,6 +121,7 @@ function Post() {
         })
       );
     } else {
+      //si il ne la pas liké on l'ajoute
       dispatch(
         likeReducer({
           postUserId: userData.user.userId,
@@ -135,10 +142,7 @@ function Post() {
     }
   }
 
-  //////////////
   /////dislike
-  //////////////////
-
   function dislikef(e) {
     const myPostDislike = myPost.find(
       (post) => e.currentTarget.dataset["likeid"] === post._id
@@ -212,14 +216,18 @@ function Post() {
       );
     }
   }
+
+  //suprimes les posts
   function deletePost(e) {
     dispatch(deletePostMiddleware(e.target.dataset["delete"]));
   }
 
+  //tri les posts par dates
   const sortAllPost = myPostRender
     .slice()
     .sort((a, b) => b.orderDate.localeCompare(a.orderDate));
 
+  //affiche le rendu css html
   return (
     <div>
       <CreatePost />
@@ -229,8 +237,8 @@ function Post() {
             <p>{post.name}</p>
             <p>{post.lastName}</p>
           </div>
-          {postIdModify === post._id && isUpdate === true ? (
-            <>
+          {/* {postIdModify === post._id && isUpdate === true ? ( */}
+          {/* <>
               <h2 className="title">{title}</h2>
               <div className="text-zone">
                 <p>{textUpdate}</p>
@@ -238,18 +246,18 @@ function Post() {
                   <img src={imageUpdate} alt={post.name + "image"}></img>
                 )}
               </div>
-            </>
-          ) : (
-            <>
-              <h2 className="title">{post.title}</h2>
-              <div className="text-zone">
-                <p>{post.textContent}</p>
-                {post.imageUrl === "" ? null : (
-                  <img src={post.imageUrl} alt={post.name + "image"}></img>
-                )}
-              </div>
-            </>
-          )}
+            </> */}
+          {/* // ) : ( */}
+          <>
+            <h2 className="title">{post.title}</h2>
+            <div className="text-zone">
+              <p>{post.textContent}</p>
+              {post.imageUrl === "" ? null : (
+                <img src={post.imageUrl} alt={post.name + "image"}></img>
+              )}
+            </div>
+          </>
+          {/* // )} */}
           <div className="button-area">
             <div className="likeDislike-area">
               <button

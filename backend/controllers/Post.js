@@ -85,8 +85,6 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  console.log(req.body);
-  console.log(req.isAdmin);
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (post.userId === req.auth.userId || req.auth.isAdmin === true) {

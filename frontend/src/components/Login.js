@@ -10,7 +10,6 @@ function Login() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const userLoad = useSelector((state) => state.user.userLoad);
-  console.log(userLoad);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -18,10 +17,12 @@ function Login() {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
-    // whatever you want to send
+    // on envoit notre mdp et email
     const data = { email: email, password: password };
     dispatch(postLogin(data));
   }
+
+  //si notre utilisateur réussi sa requete on le renvoie vers la page Post
 
   if (userLoad === "succeeded") {
     dispatch(loginUser());

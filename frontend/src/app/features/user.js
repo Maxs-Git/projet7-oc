@@ -6,7 +6,6 @@ export const userSlice = createSlice({
   initialState: { user: null, loggedIn: false, userLoad: "idle" },
   reducers: {
     loginUser: (state, action) => {
-      console.log(action.payload);
       state.loggedIn = true;
       localStorage.setItem("token", state.user.token);
     },
@@ -16,41 +15,50 @@ export const userSlice = createSlice({
       state.userLoad = "pending";
     });
     builder.addCase(postLogin.fulfilled, (state, action) => {
-      console.log(state.user);
       state.user = action.payload;
       state.userLoad = "succeeded";
-      console.log(state.user);
-      console.log(action.payload);
+    });
+    builder.addCase(postLogin.rejected, (state, action) => {
+      window.alert("Mot de passe ou email invalide");
+    });
+
+    builder.addCase(postRegister.rejected, (state, action) => {
+      window.alert("Mot de passe ou email invalide");
     });
   },
 });
 
-export const postLogin = createAsyncThunk("type/postLogin", async (data) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:3300/api/auth/login",
-      data
-    );
-    // const userToken = response.data.token;
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-});
+// mot de passe trop court ou email deja utilisé
 
-export const postRegister = createAsyncThunk(
-  "type/postSignup",
-  async (data) => {
+export const postLogin = createAsyncThunk(
+  "type/postLogin",
+  async (data, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3300/api/auth/signup",
+        "http://localhost:3300/api/auth/login",
         data
       );
       // const userToken = response.data.token;
       return response.data;
     } catch (err) {
-      window.alert("mot de passe trop court ou email deja utilisé");
       console.error(err);
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const postRegister = createAsyncThunk(
+  "type/postSignup",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3300/api/auth/signup",
+        data
+      );
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.message);
     }
   }
 );

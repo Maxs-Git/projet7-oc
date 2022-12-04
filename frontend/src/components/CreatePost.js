@@ -13,14 +13,15 @@ function CreatePost() {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
+
+    //on récupere les données que notre utilisateur a rentrer
     const dataAndImage = new FormData();
-    console.log(userData.user.name);
     dataAndImage.append("title", title);
     dataAndImage.append("name", userData.user.name);
     dataAndImage.append("lastName", userData.user.lastName);
     dataAndImage.append("textContent", text);
     dataAndImage.append("image", image);
-
+    //et on les dipatch sous un format qui supporte les images
     dispatch(middlewarePost(dataAndImage));
 
     setTitle("");
@@ -49,7 +50,7 @@ function CreatePost() {
           placeholder="text"
         ></textarea>
 
-        <label for="file" id="file-upload-label">
+        <label htmlFor="file" id="file-upload-label">
           Choose a file
         </label>
         <input

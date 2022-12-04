@@ -17,7 +17,6 @@ function Register() {
     event.nativeEvent.stopPropagation();
     event.stopPropagation();
     event.preventDefault();
-    // whatever you want to send
     const data = {
       name: name,
       lastName: lastName,
