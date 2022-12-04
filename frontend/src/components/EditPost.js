@@ -20,6 +20,13 @@ function EditPost() {
     e.stopPropagation();
     e.preventDefault();
     //on récupere les données que l'utilisateur a rentrer et on les dispatch sous un format qui supporte les images
+    if (title === "") {
+      setTitle(editTitle);
+    }
+    if (text === "") {
+      setText(editText);
+    }
+
     const dataAndImage = new FormData();
     dataAndImage.append("title", title);
     dataAndImage.append("textContent", text);
@@ -27,20 +34,6 @@ function EditPost() {
     dataAndImage.append("postId", postId);
     dispatch(editPostMiddleware(dataAndImage));
   }
-
-  //si la requete a l'api a fini on dispatch
-  // if (editPostStatus === "finish") {
-  //   dispatch(
-  //     editMyPost({
-  //       postId: postId,
-  //       postShow: false,
-  //       title: title,
-  //       textContent: text,
-  //       isUpdate: true,
-  //       imageUrl: "",
-  //     })
-  //   );
-  // }
   return (
     <div>
       {showMyPost === true && (

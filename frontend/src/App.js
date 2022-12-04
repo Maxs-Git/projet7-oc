@@ -1,13 +1,11 @@
 import { UidContext } from "./components/AppContext.js";
 import Routes from "./components/Routes";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 const App = () => {
-  const dispatch = useDispatch();
-  const [uid, setUid] = useState(null);
 
-  useEffect(() => {});
+  const [uid] = useState(null);
 
   return (
     <UidContext.Provider value={uid}>

@@ -72,13 +72,13 @@ exports.login = (req, res, next) => {
 };
 
 exports.myUser = (req, res, next) => {
-  if (!ObjectID.isValid(req.params.id))
+  if (!ObjectID.isValid(req.auth.userId))
     return res.status(400).send("ID unknown :" + req.params.id);
 
-  User.findById(req.params.id, (err, data) => {
+  User.findById(req.auth.userId, (err, data) => {
     if (!err) res.send(data);
     else console.log("id unknown :" + err);
-  }).select("-passsword");
+  }).select("-password");
 };
 
 // module.exports.logout = (req, res) => {};

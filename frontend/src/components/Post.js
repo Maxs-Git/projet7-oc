@@ -26,9 +26,9 @@ function Post() {
   const myPostRender = useSelector((state) => state.post.posts);
 
   //regarde si note utilisateur est connécté
-  if (userData.loggedIn === false) {
-    window.location.assign("http://localhost:3000/Login");
-  }
+  // if (userData.loggedIn === false) {
+  //   window.location.assign("http://localhost:3000/Login");
+  // }
 
   //affiche les posts
   useEffect(() => {
@@ -304,7 +304,7 @@ function Post() {
                 </button>
               </div>
             ) : (
-              userData.user.userId === post.userId && (
+              userData.user._id === post.userId && (
                 <div className="technic-button">
                   <button
                     data-id={post._id}

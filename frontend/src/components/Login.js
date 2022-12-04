@@ -24,10 +24,10 @@ function Login() {
 
   //si notre utilisateur réussi sa requete on le renvoie vers la page Post
 
-  if (userLoad === "succeeded") {
-    dispatch(loginUser());
-    navigate("/post");
-  }
+  // if (userLoad === "succeeded") {
+  //   dispatch(loginUser());
+  //   navigate("/post");
+  // }
 
   return (
     <div id="login-container">

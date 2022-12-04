@@ -1,87 +1,85 @@
 #postEdit {
-    display: flex;
-    flex-direction: column;
-    border-top: 2px solid #FD2D01;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid #fd2d01;
+  width: 100%;
 }
 
 #closeFormEdit {
-    cursor: pointer;
-    color: #FD2D01;
-    border: none;
-    background: none;
-    margin-top: 10px;
-    margin-left: 670px;
-    position: absolute;
+  cursor: pointer;
+  color: #fd2d01;
+  border: none;
+  background: none;
+  margin-top: 10px;
+  margin-left: 670px;
+  position: absolute;
 }
 
 #title-edit-input {
-    margin-top: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 30%;
-    border: none;
-    border-radius: 10px;
-    border: 1px solid red;
-    padding: 5px;
-    outline:none;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 30%;
+  border: none;
+  border-radius: 10px;
+  border: 1px solid red;
+  padding: 5px;
+  outline: none;
 }
 #textZone-edit {
-    border: none;
-    border: 1px solid red;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px auto;
-    height: 70px;
-    width: 90%;
-    resize: none;
-    outline:none;
+  border: none;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px auto;
+  height: 70px;
+  width: 90%;
+  resize: none;
+  outline: none;
 }
 
 #file-edit-label {
-    border-radius: 10px;
-    padding: 5px;
-    margin:10px auto 10px 4%;
-    width: 150px;
-    font-size: 1em;
-    font-weight: 700;
-    color: white;
-    background-color: #FD2D01;
-    display: inline-block;
-    cursor: pointer;
-    border: 2px solid #FD2D01;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px auto 10px 4%;
+  width: 150px;
+  font-size: 1em;
+  font-weight: 700;
+  color: white;
+  background-color: #fd2d01;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid #fd2d01;
 }
 
 #file-edit-label:hover {
-    background-color:white ;
-    color: #FD2D01;
+  background-color: white;
+  color: #fd2d01;
 }
 
 #postSubmitEdit {
-    font-size: 1em;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 30px;
-    height: 30px;
-    background-color: #FD2D01;
-    border: none;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    border: 2px solid #FD2D01;
-    color: white;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 30px;
+  height: 30px;
+  background-color: #fd2d01;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  border: 2px solid #fd2d01;
+  color: white;
 }
 #postSubmitEdit:hover {
-    background-color: white;
-    color: #FD2D01;
+  background-color: white;
+  color: #fd2d01;
 }
 
-
 @media screen and (max-width: 750px) {
-
-    #closeFormEdit {
-        margin-left: 84%;
-    }
+  #closeFormEdit {
+    margin-left: 84%;
+  }
 }
