@@ -237,27 +237,14 @@ function Post() {
             <p>{post.name}</p>
             <p>{post.lastName}</p>
           </div>
-          {/* {postIdModify === post._id && isUpdate === true ? ( */}
-          {/* <>
-              <h2 className="title">{title}</h2>
-              <div className="text-zone">
-                <p>{textUpdate}</p>
-                {post.imageUrl === "" ? null : (
-                  <img src={imageUpdate} alt={post.name + "image"}></img>
-                )}
-              </div>
-            </> */}
-          {/* // ) : ( */}
-          <>
-            <h2 className="title">{post.title}</h2>
-            <div className="text-zone">
-              <p>{post.textContent}</p>
-              {post.imageUrl === "" ? null : (
-                <img src={post.imageUrl} alt={post.name + "image"}></img>
-              )}
-            </div>
-          </>
-          {/* // )} */}
+          <h2 className="title">{post.title}</h2>
+          <div className="text-zone">
+            <p>{post.textContent}</p>
+            {post.imageUrl === "" ? null : (
+              <img src={post.imageUrl} alt={post.name + "image"}></img>
+            )}
+          </div>
+
           <div className="button-area">
             <div className="likeDislike-area">
               <button

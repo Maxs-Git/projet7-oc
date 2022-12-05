@@ -31,36 +31,7 @@ function Banner() {
 
         <div className="button-banner">
           {userData.loggedIn === false ? (
-            <>
-              {/* <button>
-              <Link
-                style={{
-                  textDecoration: "none",
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "black",
-                }}
-                to="/Login"
-              >
-                Login
-              </Link>
-            </button>
-
-            <button>
-              <Link
-                style={{
-                  textDecoration: "none",
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: "black",
-                  ":hover": { color: "white" },
-                }}
-                to="/Register"
-              >
-                Register
-              </Link>
-            </button> */}
-            </>
+            <></>
           ) : (
             <>
               <h1 id="welcome">

@@ -23,15 +23,6 @@ const postSlice = createSlice({
     editMyPost: (state, action) => {
       //cherche le post que l'on veut editer dans la liste et le modifie
       state.postEdit = action.payload;
-
-      // const findMyPost = state.posts.find(
-      //   (post) => post._id === state.postEdit.postId
-      // );
-      // if (findMyPost) {
-      //   findMyPost.title = state.postEdit.title;
-      //   findMyPost.textContent = state.postEdit.textContent;
-      //   findMyPost.imageUrl = state.postEdit.imageUrl;
-      // }
     },
     likeReducer: (state, action) => {
       state.likeObject = action.payload;
