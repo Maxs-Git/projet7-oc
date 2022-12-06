@@ -25,11 +25,6 @@ function Post() {
   const myPost = useSelector((state) => state.post.posts);
   const myPostRender = useSelector((state) => state.post.posts);
 
-  //regarde si note utilisateur est connécté
-  // if (userData.loggedIn === false) {
-  //   window.location.assign("http://localhost:3000/Login");
-  // }
-
   //affiche les posts
   useEffect(() => {
     if (postStatus === "idle") {
@@ -69,17 +64,17 @@ function Post() {
 
     //regarde dans le array du like voir si notre utilisateur n'est pas dedans
     const findUserLike = myPostLike.usersLiked.find(
-      (userId) => userId === userData.user.userId
+      (userId) => userId === userData.user._id
     );
     //regarde dans le array du dislike voir si notre utilisateur n'est pas dedans
     const findUserDislike = myPostLike.usersDisliked.find(
-      (userId) => userId === userData.user.userId
+      (userId) => userId === userData.user._id
     );
     if (findUserDislike) {
       dispatch(
         likeReducer({
           //si il est dans le array de dislike on le retire et l'ajoute dans celui du like
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           postId: myPostLike._id,
           likes: myPostLike.likes + 1,
           dislikes: myPostLike.dislikes - 1,
@@ -89,14 +84,14 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostLike._id,
           like: 0,
         })
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostLike._id,
           like: 1,
         })
@@ -106,7 +101,7 @@ function Post() {
       dispatch(
         likeReducer({
           postId: myPostLike._id,
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           likes: myPostLike.likes - 1,
           dislikes: myPostLike.dislikes,
           likeStatus: false,
@@ -115,7 +110,7 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostLike._id,
           like: 0,
         })
@@ -124,7 +119,7 @@ function Post() {
       //si il ne la pas liké on l'ajoute
       dispatch(
         likeReducer({
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           postId: myPostLike._id,
           likes: myPostLike.likes + 1,
           dislikes: myPostLike.dislikes,
@@ -134,7 +129,7 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostLike._id,
           like: 1,
         })
@@ -148,15 +143,15 @@ function Post() {
       (post) => e.currentTarget.dataset["likeid"] === post._id
     );
     const findUserDislike = myPostDislike.usersDisliked.find(
-      (userId) => userId === userData.user.userId
+      (userId) => userId === userData.user._id
     );
     const findUserLike = myPostDislike.usersLiked.find(
-      (userId) => userId === userData.user.userId
+      (userId) => userId === userData.user._id
     );
     if (findUserLike) {
       dispatch(
         dislikeReducer({
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           postId: myPostDislike._id,
           likes: myPostDislike.likes - 1,
           dislikes: myPostDislike.dislikes + 1,
@@ -166,14 +161,14 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostDislike._id,
           like: 0,
         })
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostDislike._id,
           like: -1,
         })
@@ -182,7 +177,7 @@ function Post() {
       dispatch(
         dislikeReducer({
           postId: myPostDislike._id,
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           likes: myPostDislike.likes,
           dislikes: myPostDislike.dislikes - 1,
           dislikeStatus: false,
@@ -191,7 +186,7 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostDislike._id,
           like: 0,
         })
@@ -199,7 +194,7 @@ function Post() {
     } else {
       dispatch(
         dislikeReducer({
-          postUserId: userData.user.userId,
+          postUserId: userData.user._id,
           postId: myPostDislike._id,
           likes: myPostDislike.likes,
           dislikes: myPostDislike.dislikes + 1,
@@ -209,7 +204,7 @@ function Post() {
       );
       dispatch(
         likeDislikePostMiddleware({
-          userId: userData.user.userId,
+          userId: userData.user._id,
           postId: myPostDislike._id,
           like: -1,
         })

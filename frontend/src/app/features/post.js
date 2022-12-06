@@ -21,7 +21,6 @@ const postSlice = createSlice({
       state.posts.push(action.payload);
     },
     editMyPost: (state, action) => {
-      //cherche le post que l'on veut editer dans la liste et le modifie
       state.postEdit = action.payload;
     },
     likeReducer: (state, action) => {

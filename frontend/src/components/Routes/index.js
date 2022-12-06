@@ -11,10 +11,11 @@ const index = () => {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Banner />}>
-          <Route path="/" element={<Home />} />
+          
           <Route path="/Post" element={<Post />} />
         </Route>
       </Routes>

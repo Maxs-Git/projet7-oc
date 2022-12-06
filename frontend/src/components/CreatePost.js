@@ -21,6 +21,7 @@ function CreatePost() {
     dataAndImage.append("lastName", userData.user.lastName);
     dataAndImage.append("textContent", text);
     dataAndImage.append("image", image);
+    dataAndImage.append("userId", userData.user._id);
     //et on les dipatch sous un format qui supporte les images
     dispatch(middlewarePost(dataAndImage));
 

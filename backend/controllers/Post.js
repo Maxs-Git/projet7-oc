@@ -3,43 +3,24 @@ const fs = require("fs");
 const User = require("../models/User");
 
 exports.createPost = (req, res, next) => {
-  // const postObject = JSON.parse(req.body);
   const postObject = req.body;
-  delete postObject._id;
-  delete postObject._userId;
-  const myUser = User.findOne({ id: req.auth.userId });
-  if (req.file) {
-    const post = new Post({
-      ...postObject,
-      userId: req.auth.userId,
-      imageUrl: `${req.protocol}://${req.get("host")}/images/${
-        req.file.filename
-      }`,
-    });
+  const imageAdd = req.file
+    ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+    : "";
+  console.log(imageAdd);
+  const post = new Post({
+    ...postObject,
+    imageUrl: imageAdd,
+  });
 
-    post
-      .save()
-      .then(() => {
-        res.status(201).json(post);
-      })
-      .catch((error) => {
-        res.status(400).json({ error });
-      });
-  } else {
-    const post = new Post({
-      ...postObject,
-      userId: req.auth.userId,
-      imageUrl: "",
+  post
+    .save()
+    .then(() => {
+      res.status(201).json(post);
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
     });
-    post
-      .save()
-      .then(() => {
-        res.status(201).json(post);
-      })
-      .catch((error) => {
-        res.status(400).json({ error });
-      });
-  }
 };
 
 exports.getAllPost = (req, res, next) => {
@@ -64,14 +45,10 @@ exports.modifyPost = (req, res, next) => {
       }
     : { ...req.body, imageUrl: "" };
 
-  delete postObject._userId;
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (post.userId === req.auth.userId || req.auth.isAdmin === true) {
-        Post.updateOne(
-          { _id: req.params.id },
-          { ...postObject, _id: req.params.id }
-        )
+        Post.updateOne({ ...postObject })
           .then(() => res.status(200).json(postObject))
           .catch((error) => res.status(400).json({ error }));
       } else {

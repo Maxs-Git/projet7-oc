@@ -4,12 +4,13 @@ const cors = require("cors");
 const path = require("path");
 const userRoutes = require("./routes/user.js");
 const postRoutes = require("./routes/post.js");
+require("dotenv").config();
 
 mongoose
-  .connect(
-    "mongodb+srv://User:l9f4LiqFp7Utr9d8@cluster0.pa6cysc.mongodb.net/?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.REACT_APP_API_CONNECT, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

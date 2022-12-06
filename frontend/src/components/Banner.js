@@ -21,7 +21,6 @@ function Banner() {
     dispatch(getUser());
   }, [dispatch]);
   const userData = useSelector((state) => state.user);
-  console.log(userData);
   return (
     <>
       <header>
